@@ -2,10 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Thomas Hansen</Authors>
+    <Description>MySQL data adapters for Magic</Description>
+    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.mysql/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.mysql</PackageProjectUrl>
+    <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\projects\personal\magic.lambda.mysql\magic.lambda.mysql\magic.lambda.mysql.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin/Release/magic.lambda.mysql.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="magic.data.common" Version="1.0.0" />
