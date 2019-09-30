@@ -12,9 +12,17 @@ using magic.lambda.mysql.crud.builders;
 
 namespace magic.lambda.mysql.crud
 {
+    /// <summary>
+    /// The [mysql.delete] slot class
+    /// </summary>
     [Slot(Name = "mysql.delete")]
     public class Delete : ISlot
     {
+        /// <summary>
+        /// Handles the signal for the class.
+        /// </summary>
+        /// <param name="signaler">Signaler used to signal the slot.</param>
+        /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
             var builder = new SqlDeleteBuilder(input, signaler);

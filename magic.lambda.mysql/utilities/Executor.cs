@@ -11,7 +11,7 @@ using magic.signals.contracts;
 
 namespace magic.lambda.mysql.utilities
 {
-	public static class Executor
+	internal static class Executor
     {
         public static void Execute(
             Node input,

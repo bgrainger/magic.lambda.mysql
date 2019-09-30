@@ -12,6 +12,9 @@ using magic.signals.contracts;
 
 namespace magic.lambda.mysql
 {
+    /// <summary>
+    /// The [mysql.connect] slot class
+    /// </summary>
 	[Slot(Name = "mysql.connect")]
 	public class Connect : ISlot
 	{
@@ -22,6 +25,11 @@ namespace magic.lambda.mysql
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
+        /// <summary>
+        /// Handles the signal for the class.
+        /// </summary>
+        /// <param name="signaler">Signaler used to signal the slot.</param>
+        /// <param name="input">Root node for invocation.</param>
 		public void Signal(ISignaler signaler, Node input)
 		{
             var connectionString = input.GetEx<string>();

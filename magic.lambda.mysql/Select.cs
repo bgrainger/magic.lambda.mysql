@@ -10,9 +10,17 @@ using magic.lambda.mysql.utilities;
 
 namespace magic.lambda.mysql
 {
+    /// <summary>
+    /// The [mysql.select] slot class
+    /// </summary>
     [Slot(Name = "mysql.select")]
     public class Select : ISlot
     {
+        /// <summary>
+        /// Handles the signal for the class.
+        /// </summary>
+        /// <param name="signaler">Signaler used to signal the slot.</param>
+        /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
             Executor.Execute(input, signaler.Peek<MySqlConnection>("mssql-connection"), signaler, (cmd) =>

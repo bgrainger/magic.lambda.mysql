@@ -9,8 +9,16 @@ using magic.signals.contracts;
 
 namespace magic.lambda.mysql.crud.builders
 {
+    /// <summary>
+    /// Specialised update SQL builder, to create a select SQL statement by semantically traversing an input node.
+    /// </summary>
     public class SqlUpdateBuilder : com.SqlUpdateBuilder
     {
+        /// <summary>
+        /// Creates an update SQL statement
+        /// </summary>
+        /// <param name="node">Root node to generate your SQL from.</param>
+        /// <param name="signaler">Signaler to invoke slots.</param>
         public SqlUpdateBuilder(Node node, ISignaler signaler)
             : base(node, signaler, "`")
         { }
