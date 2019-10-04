@@ -2,14 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Thomas Hansen</Authors>
-    <Description>MySQL data adapters for Magic</Description>
-    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.mysql/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.mysql</PackageProjectUrl>
-    <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <PackageId>magic.lambda.mysql</PackageId>
+    <Authors>Thomas Hansen</Authors>
+    <Company>Thomas Hansen</Company>
+    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
+    <Description>MySQL helper slots for Magic.</Description>
+    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.mysql</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.mysql/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>1.1.0</PackageVersion>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/polterguy/magic.lambda.mysql.git</RepositoryUrl>
+    <PackageTags>MySQL, SQL, database, db, select, delete, insert, update</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -24,7 +31,5 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="utilities\" />
-  </ItemGroup>
+
 </Project>
