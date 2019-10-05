@@ -28,7 +28,7 @@ select `Foo`,`Howdy` from `SomeTable` limit 10 offset 100
 Where of course a large part of the point being that the structure for the above, is the exact same as the structure
 for creating a similar MS SQL Server SQL statement, except with a different slot name.
 
-Below is a list of the slots provided by this project.
+Below you can see the slots provided by this project.
 
 * __[mysql.connect]__ - Connects to a MySQL database.
 * __[mysql.execute]__ - Executes some SQL towards the currently _"top level"_ open MySQL database connection as `ExecuteNonQuery`.
@@ -47,6 +47,14 @@ These slots are listed below.
 The above slots follows the same similar generic type of syntax, and can also easily be interchanged with the SQL Server counterparts,
 arguably abstracting away the underlaying database provider more or less completely - Assuming you're only interested in CRUD
 operations, that are not too complex in nature.
+
+### Transaction slots
+
+In addition, this project also gives you 3 database transaction slots, that you can see below.
+
+* __[mysql.transaction.create]__ - Creates a new database transaction. Notice, unless explicitly committed, the transaction will be rolled back as your lambda goes out of scope.
+* __[mysql.transaction.commit]__ - Commits the top level transaction.
+* __[mysql.transaction.rollback]__ - Rolls back the top level transaction.
 
 ## License
 

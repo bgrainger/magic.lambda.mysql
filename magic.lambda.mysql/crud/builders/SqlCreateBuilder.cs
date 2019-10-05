@@ -22,7 +22,7 @@ namespace magic.lambda.mysql.crud.builders
         /// <param name="node">Root node to generate your SQL from.</param>
         /// <param name="signaler">Signaler to invoke slots.</param>
         public SqlCreateBuilder(Node node, ISignaler signaler)
-            : base(node, signaler, "`")
+            : base(node, "`")
         { }
 
         /// <summary>
