@@ -23,7 +23,7 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
 		public void Signal(ISignaler signaler, Node input)
 		{
-            signaler.Peek<Transaction>("mysql.connect").Commit();
+            signaler.Peek<Transaction>("mysql.transaction").Rollback();
         }
 	}
 }
