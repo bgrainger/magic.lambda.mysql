@@ -11,7 +11,7 @@ using magic.lambda.mysql.utilities;
 namespace magic.lambda.mysql
 {
     /// <summary>
-    /// The [mysql.execute] slot class
+    /// [mysql.execute] slot for executing a non query SQL command.
     /// </summary>
     [Slot(Name = "mysql.execute")]
     public class Execute : ISlot
@@ -23,7 +23,7 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            Executor.Execute(input, signaler.Peek<MySqlConnection>("mssql-connection"), signaler, (cmd) =>
+            Executor.Execute(input, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
             {
                 input.Value = cmd.ExecuteNonQuery();
             });

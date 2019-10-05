@@ -11,7 +11,7 @@ using magic.lambda.mysql.utilities;
 namespace magic.lambda.mysql
 {
     /// <summary>
-    /// The [mysql.scalar] slot class
+    /// [mysql.scalar] slot for executing a scalar type of SQL command.
     /// </summary>
     [Slot(Name = "mysql.scalar")]
     public class Scalar : ISlot
@@ -23,7 +23,7 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            Executor.Execute(input, signaler.Peek<MySqlConnection>("mssql-connection"), signaler, (cmd) =>
+            Executor.Execute(input, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
             {
                 input.Value = cmd.ExecuteScalar();
             });

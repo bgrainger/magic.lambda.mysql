@@ -10,7 +10,8 @@ using magic.signals.contracts;
 namespace magic.lambda.mysql.crud.builders
 {
     /// <summary>
-    /// Specialised update SQL builder, to create a select SQL statement by semantically traversing an input node.
+    /// Specialised update SQL builder, to create a select MySQL SQL statement
+    /// by semantically traversing an input node.
     /// </summary>
     public class SqlUpdateBuilder : com.SqlUpdateBuilder
     {

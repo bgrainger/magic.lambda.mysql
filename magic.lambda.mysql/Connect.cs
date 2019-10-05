@@ -13,13 +13,17 @@ using magic.signals.contracts;
 namespace magic.lambda.mysql
 {
     /// <summary>
-    /// The [mysql.connect] slot class
+    /// [mysql.connect] slot for connecting to a MySQL server instance.
     /// </summary>
 	[Slot(Name = "mysql.connect")]
 	public class Connect : ISlot
 	{
         readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// Creates a new instance of your class.
+        /// </summary>
+        /// <param name="configuration">Configuration for your application.</param>
         public Connect(IConfiguration configuration)
 		{
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
@@ -50,7 +54,7 @@ namespace magic.lambda.mysql
             using (var connection = new MySqlConnection(connectionString))
 			{
                 connection.Open();
-                signaler.Scope("mysql-connection", connection, () =>
+                signaler.Scope("mysql.connect", connection, () =>
                 {
                     signaler.Signal("eval", input);
                 });

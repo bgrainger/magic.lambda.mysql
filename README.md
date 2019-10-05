@@ -25,8 +25,8 @@ The above will result in the following SQL statement.
 select `Foo`,`Howdy` from `SomeTable` limit 10 offset 100
 ```
 
-Where of course a large part of the point being that the structure for the above, is hte exact same as the structure
-for creating a similar SQL Server SQL statement, except with a different slot name.
+Where of course a large part of the point being that the structure for the above, is the exact same as the structure
+for creating a similar MS SQL Server SQL statement, except with a different slot name.
 
 Below is a list of the slots provided by this project.
 

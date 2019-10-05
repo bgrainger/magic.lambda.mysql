@@ -11,7 +11,8 @@ using magic.signals.contracts;
 namespace magic.lambda.mysql.crud.builders
 {
     /// <summary>
-    /// Specialised insert SQL builder, to create an insert SQL statement by semantically traversing an input node.
+    /// Specialised insert SQL builder, to create an insert MySQL SQL statement
+    /// by semantically traversing an input node.
     /// </summary>
     public class SqlCreateBuilder : com.SqlCreateBuilder
     {

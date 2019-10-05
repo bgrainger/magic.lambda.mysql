@@ -38,7 +38,7 @@ namespace magic.lambda.mysql.crud
             }
 
             // Executing SQL, now parametrized.
-            Executor.Execute(sqlNode, signaler.Peek<MySqlConnection>("mysql-connection"), signaler, (cmd) =>
+            Executor.Execute(sqlNode, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
             {
                 // Notice, create SQL returns last inserted ID!
                 input.Value = cmd.ExecuteScalar();

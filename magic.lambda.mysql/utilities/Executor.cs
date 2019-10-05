@@ -11,12 +11,19 @@ using magic.signals.contracts;
 
 namespace magic.lambda.mysql.utilities
 {
+    /*
+     * Helper class for creating an executing a MySQL command.
+     */
 	internal static class Executor
     {
+        /*
+         * Creates a MySQL command, by parametrizing it with each
+         * child node specified in the invocation node, for then to invoke the
+         * lambda callback responsible for actually executing the command.
+         */
         public static void Execute(
             Node input,
             MySqlConnection connection,
-            ISignaler signaler,
             Action<MySqlCommand> functor)
         {
             using (var cmd = new MySqlCommand(input.GetEx<string>(), connection))

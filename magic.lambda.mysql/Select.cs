@@ -11,7 +11,8 @@ using magic.lambda.mysql.utilities;
 namespace magic.lambda.mysql
 {
     /// <summary>
-    /// The [mysql.select] slot class
+    /// [mysql.select] slot for executing a select type of SQL command, that returns
+    /// a row set.
     /// </summary>
     [Slot(Name = "mysql.select")]
     public class Select : ISlot
@@ -23,7 +24,7 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            Executor.Execute(input, signaler.Peek<MySqlConnection>("mssql-connection"), signaler, (cmd) =>
+            Executor.Execute(input, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
             {
                 using (var reader = cmd.ExecuteReader())
                 {
