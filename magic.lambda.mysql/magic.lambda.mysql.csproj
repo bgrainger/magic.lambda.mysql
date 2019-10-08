@@ -25,10 +25,13 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.17" />
-    <PackageReference Include="magic.data.common" Version="1.1.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="magic.signals" Version="1.1.6" />
     <PackageReference Include="magic.node.extensions" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\magic.data.common\magic.data.common\magic.data.common.csproj" />
   </ItemGroup>
 
 </Project>

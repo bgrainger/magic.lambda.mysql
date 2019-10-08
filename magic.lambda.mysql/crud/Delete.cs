@@ -6,9 +6,8 @@
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using magic.node;
+using com = magic.data.common;
 using magic.signals.contracts;
-using magic.lambda.mssql.crud;
-using magic.lambda.mysql.utilities;
 using magic.lambda.mysql.crud.builders;
 
 namespace magic.lambda.mysql.crud
@@ -27,11 +26,12 @@ namespace magic.lambda.mysql.crud
         public void Signal(ISignaler signaler, Node input)
         {
             // Parsing and creating SQL.
-            if (Common.ParseNode<SqlDeleteBuilder>(signaler, input, out Node sqlNode))
+            var exe = com.SqlBuilder.Parse<SqlDeleteBuilder>(signaler, input);
+            if (exe == null)
                 return;
 
             // Executing SQL, now parametrized.
-            Executor.Execute(sqlNode, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
+            com.Executor.Execute(exe, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
             {
                 input.Value = cmd.ExecuteNonQuery();
                 input.Clear();
@@ -47,11 +47,12 @@ namespace magic.lambda.mysql.crud
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             // Parsing and creating SQL.
-            if (Common.ParseNode<SqlDeleteBuilder>(signaler, input, out Node sqlNode))
+            var exe = com.SqlBuilder.Parse<SqlDeleteBuilder>(signaler, input);
+            if (exe == null)
                 return;
 
             // Executing SQL, now parametrized.
-            await Executor.ExecuteAsync(sqlNode, signaler.Peek<MySqlConnection>("mysql.connect"), async (cmd) =>
+            await com.Executor.ExecuteAsync(exe, signaler.Peek<MySqlConnection>("mysql.connect"), async (cmd) =>
             {
                 input.Value = await cmd.ExecuteNonQueryAsync();
                 input.Clear();

@@ -3,9 +3,10 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
+using System.Data.Common;
 using magic.node;
+using magic.data.common;
 using magic.signals.contracts;
-using magic.lambda.mysql.utilities;
 
 namespace magic.lambda.mysql
 {
@@ -22,7 +23,7 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
 		public void Signal(ISignaler signaler, Node input)
 		{
-            signaler.Scope("mysql.transaction", new Transaction(signaler), () =>
+            signaler.Scope("mysql.transaction", new Transaction(signaler, signaler.Peek<DbConnection>("mysql.connect")), () =>
             {
                 signaler.Signal("eval", input);
             });
