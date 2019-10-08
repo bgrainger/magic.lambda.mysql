@@ -4,8 +4,9 @@
  */
 
 using System;
-using MySql.Data.MySqlClient;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
@@ -16,7 +17,7 @@ namespace magic.lambda.mysql
     /// [mysql.connect] slot for connecting to a MySQL server instance.
     /// </summary>
 	[Slot(Name = "mysql.connect")]
-	public class Connect : ISlot
+	public class Connect : ISlot, ISlotAsync
 	{
         readonly IConfiguration _configuration;
 
@@ -36,6 +37,44 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
 		public void Signal(ISignaler signaler, Node input)
 		{
+            var connectionString = GetConnectionString(input);
+
+            using (var connection = new MySqlConnection(connectionString))
+			{
+                connection.Open();
+                signaler.Scope("mysql.connect", connection, () =>
+                {
+                    signaler.Signal("eval", input);
+                });
+                input.Value = null;
+            }
+        }
+
+        /// <summary>
+        /// Handles the signal for the class.
+        /// </summary>
+        /// <param name="signaler">Signaler used to signal the slot.</param>
+        /// <param name="input">Root node for invocation.</param>
+        /// <returns>An awaitable task.</returns>
+		public async Task SignalAsync(ISignaler signaler, Node input)
+        {
+            var connectionString = GetConnectionString(input);
+
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                signaler.Scope("mysql.connect", connection, () =>
+                {
+                    signaler.Signal("eval", input);
+                });
+                input.Value = null;
+            }
+        }
+
+        #region [ -- Private helper methods -- ]
+
+        string GetConnectionString(Node input)
+        {
             var connectionString = input.GetEx<string>();
 
             // Checking if this is a "generic connection string".
@@ -50,16 +89,9 @@ namespace magic.lambda.mysql
                 var generic = _configuration["databases:mysql:generic"];
                 connectionString = generic.Replace("{database}", connectionString);
             }
-
-            using (var connection = new MySqlConnection(connectionString))
-			{
-                connection.Open();
-                signaler.Scope("mysql.connect", connection, () =>
-                {
-                    signaler.Signal("eval", input);
-                });
-                input.Value = null;
-            }
+            return connectionString;
         }
-	}
+
+        #endregion
+    }
 }

@@ -3,6 +3,7 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using magic.node;
 using magic.signals.contracts;
@@ -15,7 +16,7 @@ namespace magic.lambda.mysql
     /// a row set.
     /// </summary>
     [Slot(Name = "mysql.select")]
-    public class Select : ISlot
+    public class Select : ISlot, ISlotAsync
     {
         /// <summary>
         /// Handles the signal for the class.
@@ -29,6 +30,32 @@ namespace magic.lambda.mysql
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
+                    {
+                        var rowNode = new Node();
+                        for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
+                        {
+                            var colNode = new Node(reader.GetName(idxCol), reader[idxCol]);
+                            rowNode.Add(colNode);
+                        }
+                        input.Add(rowNode);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Handles the signal for the class.
+        /// </summary>
+        /// <param name="signaler">Signaler used to signal the slot.</param>
+        /// <param name="input">Root node for invocation.</param>
+        /// <returns>An awaitable task.</returns>
+		public async Task SignalAsync(ISignaler signaler, Node input)
+        {
+            await Executor.ExecuteAsync(input, signaler.Peek<MySqlConnection>("mysql.connect"), async (cmd) =>
+            {
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
                     {
                         var rowNode = new Node();
                         for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)

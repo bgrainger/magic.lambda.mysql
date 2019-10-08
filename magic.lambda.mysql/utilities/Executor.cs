@@ -4,10 +4,10 @@
  */
 
 using System;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using magic.node;
 using magic.node.extensions;
-using magic.signals.contracts;
 
 namespace magic.lambda.mysql.utilities
 {
@@ -39,6 +39,31 @@ namespace magic.lambda.mysql.utilities
 
                 // Invoking lambda callback supplied by caller.
                 functor(cmd);
+            }
+        }
+
+        /*
+         * Creates and parametrizes a SQL command, with the specified parameters,
+         * for then to invoke the specified callback with the command.
+         */
+        public static async Task ExecuteAsync(
+            Node input,
+            MySqlConnection connection,
+            Func<MySqlCommand, Task> functor)
+        {
+            using (var cmd = new MySqlCommand(input.GetEx<string>(), connection))
+            {
+                foreach (var idxPar in input.Children)
+                {
+                    cmd.Parameters.AddWithValue(idxPar.Name, idxPar.Get<object>());
+                }
+
+                // Making sure we clean nodes before invoking lambda callback.
+                input.Value = null;
+                input.Clear();
+
+                // Invoking lambda callback supplied by caller.
+                await functor(cmd);
             }
         }
     }
