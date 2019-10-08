@@ -3,10 +3,11 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
-using System.Linq;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using magic.node;
 using magic.signals.contracts;
+using magic.lambda.mssql.crud;
 using magic.lambda.mysql.utilities;
 using magic.lambda.mysql.crud.builders;
 
@@ -16,7 +17,7 @@ namespace magic.lambda.mysql.crud
     /// The [mysql.create] slot class
     /// </summary>
     [Slot(Name = "mysql.create")]
-    public class Create : ISlot
+    public class Create : ISlot, ISlotAsync
     {
         /// <summary>
         /// Handles the signal for the class.
@@ -25,23 +26,36 @@ namespace magic.lambda.mysql.crud
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            var builder = new SqlCreateBuilder(input, signaler);
-            var sqlNode = builder.Build();
-
-            // Checking if this is a "build only" invocation.
-            if (builder.IsGenerateOnly)
-            {
-                input.Value = sqlNode.Value;
-                input.Clear();
-                input.AddRange(sqlNode.Children.ToList());
+            // Parsing and creating SQL.
+            if (Common.ParseNode<SqlCreateBuilder>(signaler, input, out Node sqlNode))
                 return;
-            }
 
             // Executing SQL, now parametrized.
             Executor.Execute(sqlNode, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
             {
                 // Notice, create SQL returns last inserted ID!
                 input.Value = cmd.ExecuteScalar();
+                input.Clear();
+            });
+        }
+
+        /// <summary>
+        /// Implementation of your slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise the signal.</param>
+        /// <param name="input">Arguments to your slot.</param>
+        /// <returns>An awaitable task.</returns>
+        public async Task SignalAsync(ISignaler signaler, Node input)
+        {
+            // Parsing and creating SQL.
+            if (Common.ParseNode<SqlCreateBuilder>(signaler, input, out Node sqlNode))
+                return;
+
+            // Executing SQL, now parametrized.
+            await Executor.ExecuteAsync(sqlNode, signaler.Peek<MySqlConnection>("mysql.connect"), async (cmd) =>
+            {
+                // Notice, create SQL returns last inserted ID!
+                input.Value = await cmd.ExecuteScalarAsync();
                 input.Clear();
             });
         }
