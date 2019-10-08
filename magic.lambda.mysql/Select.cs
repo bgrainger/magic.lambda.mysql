@@ -34,7 +34,7 @@ namespace magic.lambda.mysql
                         var rowNode = new Node();
                         for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
                         {
-                            var colNode = new Node(reader.GetName(idxCol), reader[idxCol]);
+                            var colNode = new Node(reader.GetName(idxCol), Converter.GetValue(reader[idxCol]));
                             rowNode.Add(colNode);
                         }
                         input.Add(rowNode);
@@ -60,7 +60,7 @@ namespace magic.lambda.mysql
                         var rowNode = new Node();
                         for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
                         {
-                            var colNode = new Node(reader.GetName(idxCol), reader[idxCol]);
+                            var colNode = new Node(reader.GetName(idxCol), Converter.GetValue(reader[idxCol]));
                             rowNode.Add(colNode);
                         }
                         input.Add(rowNode);

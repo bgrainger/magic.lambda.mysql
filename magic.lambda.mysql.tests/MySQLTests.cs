@@ -33,7 +33,7 @@ namespace magic.tests.lambda
    limit:10
    offset:100");
             Assert.Empty(lambda.Children.First().Children);
-            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` limit 10 offset 100", lambda.Children.First().Value);
+            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` offset 100 limit 10", lambda.Children.First().Value);
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace magic.tests.lambda
       Howdy:World
    offset:100");
             Assert.Empty(lambda.Children.First().Children);
-            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` limit 25 offset 100", lambda.Children.First().Value);
+            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` offset 100 limit 25", lambda.Children.First().Value);
         }
 
         [Fact]
