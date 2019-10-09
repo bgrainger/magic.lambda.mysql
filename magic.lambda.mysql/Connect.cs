@@ -37,9 +37,7 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
 		public void Signal(ISignaler signaler, Node input)
 		{
-            var connectionString = GetConnectionString(input);
-
-            using (var connection = new MySqlConnection(connectionString))
+            using (var connection = new MySqlConnection(GetConnectionString(input)))
 			{
                 connection.Open();
                 signaler.Scope("mysql.connect", connection, () =>
@@ -58,9 +56,7 @@ namespace magic.lambda.mysql
         /// <returns>An awaitable task.</returns>
 		public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            var connectionString = GetConnectionString(input);
-
-            using (var connection = new MySqlConnection(connectionString))
+            using (var connection = new MySqlConnection(GetConnectionString(input)))
             {
                 await connection.OpenAsync();
                 signaler.Scope("mysql.connect", connection, () =>
@@ -81,12 +77,12 @@ namespace magic.lambda.mysql
             if (connectionString.StartsWith("[", StringComparison.InvariantCulture) &&
                 connectionString.EndsWith("]", StringComparison.InvariantCulture))
             {
-                var generic = _configuration["databases:mysql:generic"];
+                var generic = _configuration["magic:databases:mysql:generic"];
                 connectionString = generic.Replace("{database}", connectionString.Substring(1, connectionString.Length - 2));
             }
             else if (!connectionString.Contains(";"))
             {
-                var generic = _configuration["databases:mysql:generic"];
+                var generic = _configuration["magic:databases:mysql:generic"];
                 connectionString = generic.Replace("{database}", connectionString);
             }
             return connectionString;

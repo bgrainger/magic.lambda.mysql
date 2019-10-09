@@ -37,7 +37,7 @@ namespace magic.lambda.mysql.crud
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 (cmd) =>
             {
-                // Notice, create SQL returns last inserted ID!
+                // Notice, create SQL returns last inserted ID.
                 input.Value = cmd.ExecuteScalar();
                 input.Clear();
             });
@@ -63,7 +63,7 @@ namespace magic.lambda.mysql.crud
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 async (cmd) =>
             {
-                // Notice, create SQL returns last inserted ID!
+                // Notice, create SQL returns last inserted ID.
                 input.Value = await cmd.ExecuteScalarAsync();
                 input.Clear();
             });
