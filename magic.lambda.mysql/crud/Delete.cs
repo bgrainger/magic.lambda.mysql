@@ -31,7 +31,11 @@ namespace magic.lambda.mysql.crud
                 return;
 
             // Executing SQL, now parametrized.
-            com.Executor.Execute(exe, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
+            com.Executor.Execute(
+                exe, 
+                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<com.Transaction>("mysql.transaction"),
+                (cmd) =>
             {
                 input.Value = cmd.ExecuteNonQuery();
                 input.Clear();
@@ -52,7 +56,11 @@ namespace magic.lambda.mysql.crud
                 return;
 
             // Executing SQL, now parametrized.
-            await com.Executor.ExecuteAsync(exe, signaler.Peek<MySqlConnection>("mysql.connect"), async (cmd) =>
+            await com.Executor.ExecuteAsync(
+                exe, 
+                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<com.Transaction>("mysql.transaction"),
+                async (cmd) =>
             {
                 input.Value = await cmd.ExecuteNonQueryAsync();
                 input.Clear();

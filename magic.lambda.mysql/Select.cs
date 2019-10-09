@@ -25,7 +25,11 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            Executor.Execute(input, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
+            Executor.Execute(
+                input, 
+                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<Transaction>("mysql.transaction"),
+                (cmd) =>
             {
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -51,7 +55,11 @@ namespace magic.lambda.mysql
         /// <returns>An awaitable task.</returns>
 		public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            await Executor.ExecuteAsync(input, signaler.Peek<MySqlConnection>("mysql.connect"), async (cmd) =>
+            await Executor.ExecuteAsync(
+                input, 
+                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<Transaction>("mysql.transaction"),
+                async (cmd) =>
             {
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {

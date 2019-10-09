@@ -31,7 +31,11 @@ namespace magic.lambda.mysql.crud
                 return;
 
             // Executing SQL, now parametrized.
-            com.Executor.Execute(exe, signaler.Peek<MySqlConnection>("mysql.connect"), (cmd) =>
+            com.Executor.Execute(
+                exe, 
+                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<com.Transaction>("mysql.transaction"),
+                (cmd) =>
             {
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -64,7 +68,11 @@ namespace magic.lambda.mysql.crud
                 return;
 
             // Executing SQL, now parametrized.
-            await com.Executor.ExecuteAsync(exe, signaler.Peek<MySqlConnection>("mysql.connect"), async (cmd) =>
+            await com.Executor.ExecuteAsync(
+                exe, 
+                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<com.Transaction>("mysql.transaction"),
+                async (cmd) =>
             {
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {

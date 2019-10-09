@@ -4,7 +4,7 @@
  */
 
 using magic.node;
-using System.Transactions;
+using magic.data.common;
 using magic.signals.contracts;
 
 namespace magic.lambda.mysql

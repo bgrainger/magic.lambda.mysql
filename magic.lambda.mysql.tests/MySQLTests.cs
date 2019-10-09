@@ -3,11 +3,10 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
-using System;
 using System.Linq;
 using Xunit;
 
-namespace magic.tests.lambda
+namespace magic.lambda.mysql.tests
 {
     public class MySQLTests
     {
