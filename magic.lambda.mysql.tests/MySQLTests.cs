@@ -215,8 +215,6 @@ namespace magic.lambda.mysql.tests
             var lambda = Common.Evaluate(@"mysql.create
    generate:bool:true
    table:SomeTable
-   exclude
-      foo3
    values
       foo1:bar1
       foo2:int:5");
@@ -271,8 +269,6 @@ namespace magic.lambda.mysql.tests
             var lambda = Common.Evaluate(@"mysql.update
    generate:bool:true
    table:SomeTable
-   exclude
-      foo3
    where
       and
          id:int:1
