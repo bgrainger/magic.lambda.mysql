@@ -32,7 +32,7 @@ namespace magic.lambda.mysql.crud
 
             // Executing SQL, now parametrized.
             com.Executor.Execute(
-                exe, 
+                exe,
                 signaler.Peek<MySqlConnection>("mysql.connect"),
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 (cmd) =>
@@ -69,7 +69,7 @@ namespace magic.lambda.mysql.crud
 
             // Executing SQL, now parametrized.
             await com.Executor.ExecuteAsync(
-                exe, 
+                exe,
                 signaler.Peek<MySqlConnection>("mysql.connect"),
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 async (cmd) =>

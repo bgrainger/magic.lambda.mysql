@@ -12,7 +12,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.mysql/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>2.0.0</PackageVersion>
+    <PackageVersion>2.0.1</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.mysql.git</RepositoryUrl>
@@ -24,10 +24,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.17" />
+    <PackageReference Include="MySql.Data" Version="8.0.18" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
-    <PackageReference Include="magic.node.extensions" Version="2.0.0" />
-    <PackageReference Include="magic.data.common" Version="2.0.0" />
+    <PackageReference Include="magic.node.extensions" Version="2.0.1" />
+    <PackageReference Include="magic.data.common" Version="2.0.1" />
   </ItemGroup>
 
 </Project>

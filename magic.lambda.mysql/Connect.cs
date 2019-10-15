@@ -16,9 +16,9 @@ namespace magic.lambda.mysql
     /// <summary>
     /// [mysql.connect] slot for connecting to a MySQL server instance.
     /// </summary>
-	[Slot(Name = "mysql.connect")]
-	public class Connect : ISlot, ISlotAsync
-	{
+    [Slot(Name = "mysql.connect")]
+    public class Connect : ISlot, ISlotAsync
+    {
         readonly IConfiguration _configuration;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace magic.lambda.mysql
         /// </summary>
         /// <param name="configuration">Configuration for your application.</param>
         public Connect(IConfiguration configuration)
-		{
+        {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
@@ -35,10 +35,10 @@ namespace magic.lambda.mysql
         /// </summary>
         /// <param name="signaler">Signaler used to signal the slot.</param>
         /// <param name="input">Root node for invocation.</param>
-		public void Signal(ISignaler signaler, Node input)
-		{
+        public void Signal(ISignaler signaler, Node input)
+        {
             using (var connection = new MySqlConnection(GetConnectionString(input)))
-			{
+            {
                 connection.Open();
                 signaler.Scope("mysql.connect", connection, () =>
                 {
@@ -54,7 +54,7 @@ namespace magic.lambda.mysql
         /// <param name="signaler">Signaler used to signal the slot.</param>
         /// <param name="input">Root node for invocation.</param>
         /// <returns>An awaitable task.</returns>
-		public async Task SignalAsync(ISignaler signaler, Node input)
+        public async Task SignalAsync(ISignaler signaler, Node input)
         {
             using (var connection = new MySqlConnection(GetConnectionString(input)))
             {
