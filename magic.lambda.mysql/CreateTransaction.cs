@@ -7,6 +7,7 @@ using System.Data.Common;
 using magic.node;
 using magic.data.common;
 using magic.signals.contracts;
+using System.Threading.Tasks;
 
 namespace magic.lambda.mysql
 {
@@ -14,7 +15,8 @@ namespace magic.lambda.mysql
     /// [mysql.transaction.create] slot for creating a new MySQL database transaction.
     /// </summary>
     [Slot(Name = "mysql.transaction.create")]
-    public class CreateTransaction : ISlot
+    [Slot(Name = "wait.mysql.transaction.create")]
+    public class CreateTransaction : ISlot, ISlotAsync
     {
         /// <summary>
         /// Handles the signal for the class.
@@ -26,6 +28,20 @@ namespace magic.lambda.mysql
             signaler.Scope("mysql.transaction", new Transaction(signaler, signaler.Peek<DbConnection>("mysql.connect")), () =>
             {
                 signaler.Signal("eval", input);
+            });
+        }
+
+        /// <summary>
+        /// Handles the signal for the class.
+        /// </summary>
+        /// <param name="signaler">Signaler used to signal the slot.</param>
+        /// <param name="input">Root node for invocation.</param>
+        /// <returns>An awaitable task.</returns>
+        public async Task SignalAsync(ISignaler signaler, Node input)
+        {
+            await signaler.ScopeAsync("mysql.transaction", new Transaction(signaler, signaler.Peek<DbConnection>("mysql.connect")), async () =>
+            {
+                await signaler.SignalAsync("eval", input);
             });
         }
     }

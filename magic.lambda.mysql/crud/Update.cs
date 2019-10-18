@@ -16,6 +16,7 @@ namespace magic.lambda.mysql.crud
     /// The [mysql.update] slot class
     /// </summary>
     [Slot(Name = "mysql.update")]
+    [Slot(Name = "wait.mysql.update")]
     public class Update : ISlot, ISlotAsync
     {
         /// <summary>
