@@ -3,9 +3,11 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using magic.node;
+using magic.node.extensions;
 using com = magic.data.common;
 using magic.signals.contracts;
 using magic.lambda.mysql.crud.builders;
@@ -26,8 +28,23 @@ namespace magic.lambda.mysql.crud
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
+            /*
+             * Checking if caller wants us to return the ID of the newly
+             * create record.
+             */
+            var returnId = input.Children
+                .FirstOrDefault(x => x.Name == "return-id")?.GetEx<bool>() ?? true;
+
             // Parsing and creating SQL.
-            var exe = com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input);
+            var exe = returnId ?
+                com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                com.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+
+            /*
+             * Notice, if the builder doesn't return a node, we are
+             * not supposed to actually execute the SQL, but rather only
+             * to generate it.
+             */
             if (exe == null)
                 return;
 
@@ -38,8 +55,19 @@ namespace magic.lambda.mysql.crud
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 (cmd) =>
             {
-                // Notice, create SQL returns last inserted ID.
-                input.Value = cmd.ExecuteScalar();
+                /*
+                 * Checking if caller wants us to return the ID of the newly
+                 * created record.
+                 */
+                if (returnId)
+                {
+                    input.Value = cmd.ExecuteScalar();
+                }
+                else
+                {
+                    cmd.ExecuteNonQuery();
+                    input.Value = null;
+                }
                 input.Clear();
             });
         }
@@ -52,8 +80,23 @@ namespace magic.lambda.mysql.crud
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
+            /*
+             * Checking if caller wants us to return the ID of the newly
+             * create record.
+             */
+            var returnId = input.Children
+                .FirstOrDefault(x => x.Name == "return-id")?.GetEx<bool>() ?? true;
+
             // Parsing and creating SQL.
-            var exe = com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input);
+            var exe = returnId ?
+                com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                com.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+
+            /*
+             * Notice, if the builder doesn't return a node, we are
+             * not supposed to actually execute the SQL, but rather only
+             * to generate it.
+             */
             if (exe == null)
                 return;
 
@@ -64,8 +107,19 @@ namespace magic.lambda.mysql.crud
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 async (cmd) =>
             {
-                // Notice, create SQL returns last inserted ID.
-                input.Value = await cmd.ExecuteScalarAsync();
+                /*
+                 * Checking if caller wants us to return the ID of the newly
+                 * created record.
+                 */
+                if (returnId)
+                {
+                    input.Value = await cmd.ExecuteScalarAsync();
+                }
+                else
+                {
+                    await cmd.ExecuteNonQueryAsync();
+                    input.Value = null;
+                }
                 input.Clear();
             });
         }
