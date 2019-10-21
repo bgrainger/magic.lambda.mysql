@@ -2,25 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>magic.lambda.mysql</PackageId>
-    <Authors>Thomas Hansen</Authors>
-    <Company>Thomas Hansen</Company>
-    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
-    <Description>MySQL Server helper slots for Magic allowing you to easily connect to a MySQL database, and read, update, delete and insert into your database.</Description>
-    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.mysql</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.mysql/master/LICENSE</PackageLicenseUrl>
-    <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
-    <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>2.0.5</PackageVersion>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/polterguy/magic.lambda.mysql.git</RepositoryUrl>
-    <PackageTags>MySQL, SQL, database, db, select, delete, insert, update</PackageTags>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin/Release/netstandard2.0/magic.lambda.mysql.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
