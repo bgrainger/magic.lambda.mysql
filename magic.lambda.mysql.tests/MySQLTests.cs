@@ -164,6 +164,22 @@ namespace magic.lambda.mysql.tests
         }
 
         [Fact]
+        public void SelectSQL_11()
+        {
+            var lambda = Common.Evaluate(@"mysql.read
+   generate:bool:true
+   table:SomeTable
+   where
+      and
+         foo.like:query%
+   ");
+            Assert.Single(lambda.Children.First().Children);
+            Assert.Equal("select * from `SomeTable` where (`foo` like @0) limit 25", lambda.Children.First().Value);
+            Assert.Equal("@0", lambda.Children.First().Children.First().Name);
+            Assert.Equal("query%", lambda.Children.First().Children.First().Value);
+        }
+
+        [Fact]
         public void DeleteSQL_01()
         {
             var lambda = Common.Evaluate(@"mysql.delete

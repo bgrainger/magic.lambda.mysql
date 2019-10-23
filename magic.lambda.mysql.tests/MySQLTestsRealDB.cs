@@ -24,6 +24,7 @@ CREATE TABLE `foo`.`demo` (
 
  */
 
+#if RUN_REAL
 using System.Linq;
 using Xunit;
 using magic.node.extensions;
@@ -35,7 +36,6 @@ namespace magic.lambda.mysql.tests
     {
         // TODO: Modify this connection string if you intend to run these tests.
         const string _connection = "Server=127.0.0.1;Database=foo;Uid=root;Pwd=ThisIsNotANicePassword;SslMode=Preferred;";
-#if RUN_REAL
 
         [Fact]
         public void SelectFromDemo_01()
@@ -157,6 +157,6 @@ mysql.connect:""{0}""
    mysql.scalar:""select count(*) from demo where text = 'Non existing - yet does'""", _connection));
             Assert.True(lambda.Children.First().Children.Skip(1).First().Get<int>() > 0);
         }
-#endif
     }
 }
+#endif
