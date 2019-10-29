@@ -48,13 +48,47 @@ The above slots follows the same similar generic type of syntax, and can also ea
 arguably abstracting away the underlaying database provider more or less completely - Assuming you're only interested in CRUD
 operations, that are not too complex in nature.
 
-### Transaction slots
+## Transaction slots
 
 In addition, this project also gives you 3 database transaction slots, that you can see below.
 
 * __[mysql.transaction.create]__ - Creates a new database transaction. Notice, unless explicitly committed, the transaction will be rolled back as your lambda goes out of scope.
 * __[mysql.transaction.commit]__ - Commits the top level transaction.
 * __[mysql.transaction.rollback]__ - Rolls back the top level transaction.
+
+## Conditional select, update, delete
+
+The __[mysql.delete]__, __[mysql.read]__ and __[mysql.update]__ slots can be given relatively complex where conditions, where you apply
+conditions to these as a __[where]__ node. This will become a part of the SQL _"where"_ clause, where each condition by default will
+be _"AND'ed"_ together, but this too can be changed by adding YALOA that declares your logical operator. For instance, to select
+all records that have a `value` of _5_ and an `content` of _"foo"_ you can do something like the following
+
+```
+mysql.read
+   table:SomeTable
+   where
+      value:int:5
+      content:foo
+```
+
+The above invocation will return all records that have _both_ a _"value"_ of _"5"_, and a _"content"_ of _"foo"_. You can optionally apply
+a logical operator to it, to change it to becoming an _"OR"_ SQL where clause, by adding an _"OR"_ node in between the __[where]__ and
+the values, such as the following illustrates.
+
+```
+mysql.read
+   table:SomeTable
+   where
+      or
+         value:int:5
+         content:foo
+```
+
+The above will return all records that have _either_ a value of _"5"_ OR a _"content"_ of _"foo"_. To understand how the above logic works,
+it might be useful to play around with the _"Evaluator"_ in the Magic frontend, and make sure you add __[generate]__ and set its value
+to boolean _"true"_, which will return the resulting SQL, instead of actually evaluating the SQL.
+
+Both select, delete and read slots have the same logic when it comes to creating _"where"_ clauses and attaching these to your resulting SQL.
 
 ## License
 
