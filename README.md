@@ -90,6 +90,67 @@ to boolean _"true"_, which will return the resulting SQL, instead of actually ev
 
 Both select, delete and read slots have the same logic when it comes to creating _"where"_ clauses and attaching these to your resulting SQL.
 
+## More complex operators
+
+In addition to the above, you can also supply any operators, in two ways in fact, which becomes your comparison operators. Below is its most
+simple example.
+
+```
+mysql.read
+   table:SomeTable
+   where
+      and
+         !=
+            value:int:5
+            content:foo
+```
+
+The above will return all records which does _not_ have a _"value"_ of 5, nor a _"content"_ of _"foo"_. Supported operators are as follows.
+
+* !=
+* <
+* >
+* >=
+* <=
+* =
+* like
+
+In addition to the above operators, you can supply an _"in"_ operator, which is structurally different, though similar in logic.
+Below is an example.
+
+```
+mysql.read
+   table:SomeTable
+   where
+      or
+         in
+            value
+               :long:5
+               :long:7
+```
+
+The above will return all records where its _"value_" is either equal to 5 or 7. You can create as many _"in"_ values as you wish, but corrrently
+only integer (long, int types of columns) are supported.
+
+All operators are also supported as _"column-name.operator-name"_ type of arguments, such as the following illustrates.
+
+```
+mysql.read
+   table:SomeTable
+   where
+      and
+         foo1.like:query%
+         foo2.mt:int:5
+         foo3.lt:int:5
+         foo4.mteq:int:5
+         foo5.lteq:int:5
+         foo6.neq:int:5
+         foo7.eq:int:5
+```
+
+_"eq"_ implies _"equals"_, _"lt"_ implies _"less than"_, _"mt"_ implies _"more than"_, _"neq"_ implies _"not equal to"_, etc. All combinations
+of previous said words, becomes the equivalent combinatory operator.
+
 ## License
 
 Although most of Magic's source code is publicly available, Magic is _not_ Open Source or Free Software.
