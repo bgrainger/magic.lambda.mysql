@@ -13,7 +13,7 @@ namespace magic.lambda.mysql
     /// [mysql.transaction.rollback] slot for rolling back the top level MySQL
     /// database transaction.
     /// </summary>
-	[Slot(Name = "mysql.transaction.rollback")]
+    [Slot(Name = "mysql.transaction.rollback")]
     public class RollbackTransaction : ISlot
     {
         /// <summary>
@@ -21,7 +21,7 @@ namespace magic.lambda.mysql
         /// </summary>
         /// <param name="signaler">Signaler used to signal the slot.</param>
         /// <param name="input">Root node for invocation.</param>
-		public void Signal(ISignaler signaler, Node input)
+        public void Signal(ISignaler signaler, Node input)
         {
             signaler.Peek<Transaction>("mysql.transaction").Rollback();
         }

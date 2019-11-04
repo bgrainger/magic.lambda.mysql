@@ -41,7 +41,7 @@ namespace magic.lambda.mysql
         /// <param name="signaler">Signaler used to signal the slot.</param>
         /// <param name="input">Root node for invocation.</param>
         /// <returns>An awaitable task.</returns>
-		public async Task SignalAsync(ISignaler signaler, Node input)
+        public async Task SignalAsync(ISignaler signaler, Node input)
         {
             await Executor.ExecuteAsync(
                 input,
