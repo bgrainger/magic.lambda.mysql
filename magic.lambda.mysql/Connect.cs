@@ -72,10 +72,15 @@ namespace magic.lambda.mysql
 
         string GetConnectionString(Node input)
         {
-            var connectionString = input.GetEx<string>();
+            var connectionString = input.Value == null ? null : input.GetEx<string>();
 
             // Checking if this is a "generic connection string".
-            if (connectionString.StartsWith("[", StringComparison.InvariantCulture) &&
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                var generic = _configuration["magic:databases:mysql:generic"];
+                connectionString = generic.Replace("{database}", "information_schema");
+            }
+            else if (connectionString.StartsWith("[", StringComparison.InvariantCulture) &&
                 connectionString.EndsWith("]", StringComparison.InvariantCulture))
             {
                 var generic = _configuration["magic:databases:mysql:generic"];
