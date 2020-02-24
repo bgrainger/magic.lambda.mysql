@@ -60,10 +60,10 @@ namespace magic.lambda.mysql
             using (var connection = new MySqlConnection(GetConnectionString(input)))
             {
                 await connection.OpenAsync();
-                await signaler.ScopeAsync("mysql.connect", connection, async () =>
-                {
-                    await signaler.SignalAsync("eval", input);
-                });
+                await signaler.ScopeAsync(
+                    "mysql.connect",
+                    connection,
+                    async () => await signaler.SignalAsync("wait.eval", input));
                 input.Value = null;
             }
         }
