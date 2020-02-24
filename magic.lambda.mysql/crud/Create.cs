@@ -10,6 +10,7 @@ using magic.node;
 using magic.node.extensions;
 using com = magic.data.common;
 using magic.signals.contracts;
+using magic.lambda.mysql.helpers;
 using magic.lambda.mysql.crud.builders;
 
 namespace magic.lambda.mysql.crud
@@ -51,7 +52,7 @@ namespace magic.lambda.mysql.crud
             // Executing SQL, now parametrized.
             com.Executor.Execute(
                 exe,
-                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 (cmd) =>
             {

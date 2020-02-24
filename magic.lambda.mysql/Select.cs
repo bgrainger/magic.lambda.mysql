@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 using magic.node;
 using magic.data.common;
 using magic.signals.contracts;
+using magic.lambda.mysql.helpers;
 
 namespace magic.lambda.mysql
 {
@@ -28,7 +29,7 @@ namespace magic.lambda.mysql
         {
             Executor.Execute(
                 input,
-                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<Transaction>("mysql.transaction"),
                 (cmd) =>
             {
@@ -58,7 +59,7 @@ namespace magic.lambda.mysql
         {
             await Executor.ExecuteAsync(
                 input,
-                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<Transaction>("mysql.transaction"),
                 async (cmd) =>
             {

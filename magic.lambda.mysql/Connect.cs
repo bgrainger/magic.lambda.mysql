@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
+using magic.lambda.mysql.helpers;
 
 namespace magic.lambda.mysql
 {
@@ -38,13 +39,12 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            using (var connection = new MySqlConnection(GetConnectionString(input)))
+            using (var connection = new MySqlConnectionWrapper(GetConnectionString(input)))
             {
-                connection.Open();
-                signaler.Scope("mysql.connect", connection, () =>
-                {
-                    signaler.Signal("eval", input);
-                });
+                signaler.Scope(
+                    "mysql.connect",
+                    connection,
+                    () => signaler.Signal("eval", input));
                 input.Value = null;
             }
         }
