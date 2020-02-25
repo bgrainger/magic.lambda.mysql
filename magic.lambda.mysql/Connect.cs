@@ -57,9 +57,8 @@ namespace magic.lambda.mysql
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            using (var connection = new MySqlConnection(GetConnectionString(input)))
+            using (var connection = new MySqlConnectionWrapper(GetConnectionString(input)))
             {
-                await connection.OpenAsync();
                 await signaler.ScopeAsync(
                     "mysql.connect",
                     connection,
