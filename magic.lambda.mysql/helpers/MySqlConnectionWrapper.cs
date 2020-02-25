@@ -18,22 +18,18 @@ namespace magic.lambda.mysql.helpers
 
         public MySqlConnectionWrapper(string connectionString)
         {
-            _connection = new Lazy<MySqlConnection>(() => new MySqlConnection(connectionString));
+            _connection = new Lazy<MySqlConnection>(() =>
+            {
+                var connection = new MySqlConnection(connectionString);
+                connection.Open();
+                return connection;
+            });
         }
 
         /*
          * Property to retrieve underlying MySQL connection.
          */
-        public MySqlConnection Connection
-        {
-            get
-            {
-                if (!_connection.IsValueCreated)
-                    _connection.Value.Open();
-
-                return _connection.Value;
-            }
-        }
+        public MySqlConnection Connection => _connection.Value;
 
         public void Dispose()
         {
