@@ -104,7 +104,7 @@ namespace magic.lambda.mysql.crud
             // Executing SQL, now parametrized.
             await com.Executor.ExecuteAsync(
                 exe,
-                signaler.Peek<MySqlConnection>("mysql.connect"),
+                signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
                 async (cmd) =>
             {
