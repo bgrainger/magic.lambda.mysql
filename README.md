@@ -98,8 +98,8 @@ The above will return all records which does _not_ have a _"value"_ of 5, nor a 
 
 * !=
 * <
-* >
-* >=
+* \>
+* \>=
 * <=
 * =
 * like
