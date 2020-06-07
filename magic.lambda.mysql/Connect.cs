@@ -6,7 +6,6 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
