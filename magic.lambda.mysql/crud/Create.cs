@@ -5,7 +5,6 @@
 
 using System.Linq;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 using magic.node;
 using magic.node.extensions;
 using com = magic.data.common;

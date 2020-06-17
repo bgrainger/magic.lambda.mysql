@@ -4,7 +4,6 @@
  */
 
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 using magic.node;
 using com = magic.data.common;
 using magic.signals.contracts;
