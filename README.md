@@ -9,7 +9,7 @@ types of SQL statements. In addition, it provides slots to open a MySQL database
 declare your own SQL statements, to be executed towards a MySQL database. Slots this project encapsulates are as follows.
 
 * __[mysql.connect]__ - Connects to a database, either taking an entire connection string, or a reference to a configuration connection string.
-* __[mysql.create]__ - Creates a single redorc in the specified table.
+* __[mysql.create]__ - Creates a single record in the specified table.
 * __[mysql.delete]__ - Deletes a single record in the specified table.
 * __[mysql.read]__ - Reads multiple records from the specified table.
 * __[mysql.update]__ - Updates a single record in the specified table.
