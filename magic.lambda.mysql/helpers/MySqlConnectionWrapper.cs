@@ -22,6 +22,11 @@ namespace magic.lambda.mysql.helpers
             {
                 var connection = new MySqlConnection(connectionString);
                 connection.Open();
+                using (var cmd = new MySqlCommand("set time_zone = '+00:00'"))
+                {
+                    cmd.Connection = connection;
+                    cmd.ExecuteNonQuery();
+                }
                 return connection;
             });
         }
