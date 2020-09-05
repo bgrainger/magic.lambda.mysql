@@ -136,9 +136,9 @@ can use the following 3 slots to create, rollback, and/or commit transactions to
 * __[mysql.transaction.commit]__ - Commits an existing open transaction
 * __[mysql.transaction.rollback]__ - Rolls back an existing open transaction
 
-Notice, the default logic for a database transaction, is that unless it's specifically committed before leaving
-scope, it will roll back by default. Below is an example of a transaction that will rollback, since it's not
-explicitly commited before leaving scope.
+**Notice** - The default logic for a database transaction, is that unless it's _explicitly committed_
+before leaving scope, it will roll back by default. Below is an example of a transaction that will
+rollback, since it's not explicitly commited before leaving scope.
 
 ```
 mysql.connect:sakila
