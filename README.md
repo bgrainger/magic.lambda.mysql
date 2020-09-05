@@ -53,6 +53,16 @@ mysql.connect:sakila
       table:actor
 ```
 
+## [mysql.select]
+
+This slot allows you to pass in any arbitrary SQL you wish, and it will evaluate to a `DataReader`, and return
+all records as a lambda object. You can find an example below.
+
+```
+mysql.connect:sakila
+   mysql.select:select * from actor limit 10
+```
+
 ## License
 
 Although most of Magic's source code is Open Source, you will need a license key to use it.
