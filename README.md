@@ -32,9 +32,26 @@ having to change it in any ways.
 ## [mysql.create], [mysql.read], [mysql.update] and [mysql.delete]
 
 All of these slots have the _exact same syntax_ for all supported data adapters, which you can read about in the
-link below.
+link below. Just make sure you start out your CRUD slot invocations with `mysql.` instead of `sql.` to use
+them towards a MySQL database. You will also need to open a database connection before you invoke these slots,
+unless you're only interested in generating its specific SQL command text, and not actually execute the SQL.
 
 * [Magic Data Common](https://github.com/polterguy/magic.data.common)
+
+## [mysql.connect]
+
+This slot will open a database connection for you. You can pass in a complete connection string (not recommended),
+or only the database name if you wish. If you pass in only the database name, the generic connection string for MySQL
+from your _"appsettings.json"_ file will be used, substituting its `{database}` parts with the database of your choice.
+
+Inside of this, which actually is a lambda **[eval]** invocation, you can use any of the other slots, requiring
+an existing and open database connection to function. You can see an example below.
+
+```
+mysql.connect:sakila
+   mysql.read
+      table:actor
+```
 
 ## License
 
