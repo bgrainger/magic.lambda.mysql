@@ -34,7 +34,7 @@ having to change it in any ways.
 All of these slots have the _exact same syntax_ for all supported data adapters, which you can read about in the
 link below.
 
-* [Magic Data Common](https://github.com/polterguy/magic.lambda.mysql)
+* [Magic Data Common](https://github.com/polterguy/magic.data.common)
 
 ## License
 
