@@ -63,6 +63,10 @@ mysql.connect:sakila
    mysql.select:select * from actor limit 10
 ```
 
+Notice, this slot requires MySQL syntax type of SQL, and will not in any ways transpile towards your specific underlaying
+database type. If you can, you should rather use **[mysql.read]** for instance, to avoid tying yourself down to a
+specific database vendor's SQL dialect.
+
 ## License
 
 Although most of Magic's source code is Open Source, you will need a license key to use it.
