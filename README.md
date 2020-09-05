@@ -60,12 +60,89 @@ all records as a lambda object. You can find an example below.
 
 ```
 mysql.connect:sakila
-   mysql.select:select * from actor limit 10
+   mysql.select:select first_name, last_name from actor limit 5
+```
+
+Assuming you have the _"sakila"_ database from Oracle installed in your database, the results of the above
+will end up looking like the following.
+
+```
+mysql.connect
+   mysql.select
+      ""
+         first_name:PENELOPE
+         last_name:GUINESS
+      ""
+         first_name:NICK
+         last_name:WAHLBERG
+      ""
+         first_name:ED
+         last_name:CHASE
+      ""
+         first_name:JENNIFER
+         last_name:DAVIS
+      ""
+         first_name:JOHNNY
+         last_name:LOLLOBRIGIDA
 ```
 
 Notice, this slot requires MySQL syntax type of SQL, and will not in any ways transpile towards your specific underlaying
 database type. If you can, you should rather use **[mysql.read]** for instance, to avoid tying yourself down to a
 specific database vendor's SQL dialect.
+
+## [mysql.scalar]
+
+This slot is similar to the above select slot, but will only return one value, as the value of its node after
+execution, and is typically used for aggregate results. You can see an example below.
+
+```
+mysql.connect:sakila
+   mysql.scalar:select count(*) from actor
+```
+
+After execution, your result will resemble the following.
+
+```
+mysql.connect
+   mysql.scalar:long:200
+```
+
+## [mysql.execute]
+
+This slot should be used if you don't expect any type of result at all, such as in for instance delete or update
+invocations, where you don't care about the result of the operation. You can find an example below.
+
+```
+mysql.connect:sakila
+   mysql.scalar:delete from `non-existing-table`
+```
+
+## Database transactions
+
+Although you should be careful with database transactions, sometimes you _really_ need them. For those cases you
+can use the following 3 slots to create, rollback, and/or commit transactions towards your underlaying database.
+
+* __[mysql.transaction.create]__ - Creates a new database transaction
+* __[mysql.transaction.commit]__ - Commits an existing open transaction
+* __[mysql.transaction.rollback]__ - Rolls back an existing open transaction
+
+Notice, the default logic for a database transaction, is that unless it's specifically committed before leaving
+scope, it will roll back by default. Below is an example of a transaction that will rollback, since it's not
+explicitly commited before leaving scope.
+
+```
+mysql.connect:sakila
+   mysql.transaction.create
+      mysql.execute:delete from film_actor
+
+mysql.connect:sakila
+
+   /*
+    * Notice, this still returns 5462 items, since
+    * transaction was implicitly rolled back above.
+    */
+   mysql.scalar:select count(*) from film_actor
+```
 
 ## License
 
