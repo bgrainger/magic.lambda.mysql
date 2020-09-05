@@ -122,6 +122,8 @@ invocations, where you don't care about the result of the operation. You can fin
 
 ```
 mysql.connect:sakila
+
+   // Notice, will throw! (hopefully!)
    mysql.scalar:delete from `non-existing-table`
 ```
 
@@ -142,6 +144,12 @@ explicitly commited before leaving scope.
 mysql.connect:sakila
    mysql.transaction.create
       mysql.execute:delete from film_actor
+
+      /*
+       * If you uncomment the line below, by removing the initial
+       * "." (DON'T!) - Then the transaction will be COMMITTED.
+       */
+      .mysql.transaction.commit
 
 mysql.connect:sakila
 
