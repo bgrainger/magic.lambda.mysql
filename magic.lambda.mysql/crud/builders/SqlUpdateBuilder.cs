@@ -4,8 +4,8 @@
  */
 
 using magic.node;
-using com = magic.data.common;
 using magic.signals.contracts;
+using com = magic.data.common;
 
 namespace magic.lambda.mysql.crud.builders
 {
