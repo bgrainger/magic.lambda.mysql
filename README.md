@@ -160,6 +160,10 @@ mysql.connect:sakila
    mysql.scalar:select count(*) from film_actor
 ```
 
+**Notice** - A transaction will follow your connection, implying to count items
+after transaction has been rolled back, we'll need a _new_ connection, as the
+above example illustrates.
+
 ## License
 
 Although most of Magic's source code is Open Source, you will need a license key to use it.
