@@ -12,7 +12,7 @@ namespace magic.lambda.mysql.helpers
      * Internal helper class to create a MySqlConnection lazy, such that it is not actuall created
      * before it's actually de-referenced.
      */
-    internal class MySqlConnectionWrapper : IDisposable
+    internal sealed class MySqlConnectionWrapper : IDisposable
     {
         readonly Lazy<MySqlConnection> _connection;
 

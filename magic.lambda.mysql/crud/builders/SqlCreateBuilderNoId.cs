@@ -3,7 +3,6 @@
  * See the enclosed LICENSE file for details.
  */
 
-using System.Text;
 using magic.node;
 using magic.signals.contracts;
 using com = magic.data.common;
