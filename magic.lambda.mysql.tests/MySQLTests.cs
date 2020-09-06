@@ -44,9 +44,8 @@ namespace magic.lambda.mysql.tests
    where
       and
          jo-dude:int:5
-         like
-            foo-bar:howdy%");
-            Assert.Equal("select * from `SomeTable` where (`jo-dude` = @0 and `foo-bar` like @1) limit 25", lambda.Children.First().Value);
+         foo-bar.like:howdy%");
+            Assert.Equal("select * from `SomeTable` where `jo-dude` = @0 and `foo-bar` like @1 limit 25", lambda.Children.First().Value);
             Assert.Equal(2, lambda.Children.First().Children.Count());
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal(5, lambda.Children.First().Children.First().Value);
@@ -64,7 +63,7 @@ namespace magic.lambda.mysql.tests
       or
          jo-dude:int:5
          foo:bar");
-            Assert.Equal("select * from `SomeTable` where (`jo-dude` = @0 or `foo` = @1) limit 25", lambda.Children.First().Value);
+            Assert.Equal("select * from `SomeTable` where `jo-dude` = @0 or `foo` = @1 limit 25", lambda.Children.First().Value);
             Assert.Equal(2, lambda.Children.First().Children.Count());
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal(5, lambda.Children.First().Children.First().Value);
@@ -86,7 +85,7 @@ namespace magic.lambda.mysql.tests
          or
             jo:decimal:5
             ho:bar");
-            Assert.Equal("select * from `SomeTable` where ((`jo-dude` = @0 or `foo` = @1) and (`jo` = @2 or `ho` = @3)) limit 25", lambda.Children.First().Value);
+            Assert.Equal("select * from `SomeTable` where (`jo-dude` = @0 or `foo` = @1) and (`jo` = @2 or `ho` = @3) limit 25", lambda.Children.First().Value);
             Assert.Equal(4, lambda.Children.First().Children.Count());
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal(5, lambda.Children.First().Children.First().Value);
@@ -141,9 +140,8 @@ namespace magic.lambda.mysql.tests
    table:SomeTable
    where
       and
-         >
-            id:int:3");
-            Assert.Equal("select * from `SomeTable` where (`id` > @0) limit 25", lambda.Children.First().Value);
+         id.mt:int:3");
+            Assert.Equal("select * from `SomeTable` where `id` > @0 limit 25", lambda.Children.First().Value);
             Assert.Single(lambda.Children.First().Children);
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal(3, lambda.Children.First().Children.First().Value);
@@ -178,9 +176,9 @@ namespace magic.lambda.mysql.tests
          foo5.lteq:int:5
          foo6.neq:int:5
          foo7.eq:int:5
-         .foo.like:query%");
+         \foo.like:query%");
             Assert.Equal(8, lambda.Children.First().Children.Count());
-            Assert.Equal("select * from `SomeTable` where (`foo1` like @0 and `foo2` > @1 and `foo3` < @2 and `foo4` >= @3 and `foo5` <= @4 and `foo6` != @5 and `foo7` = @6 and `foo.like` = @7) limit 25", lambda.Children.First().Value);
+            Assert.Equal("select * from `SomeTable` where `foo1` like @0 and `foo2` > @1 and `foo3` < @2 and `foo4` >= @3 and `foo5` <= @4 and `foo6` != @5 and `foo7` = @6 and `foo.like` = @7 limit 25", lambda.Children.First().Value);
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal("query%", lambda.Children.First().Children.First().Value);
             Assert.Equal("@1", lambda.Children.First().Children.Skip(1).First().Name);
@@ -210,8 +208,10 @@ namespace magic.lambda.mysql.tests
       Howdy
    where
       and
-         Foo.in:5,7");
-            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` where (`Foo` in (@0,@1)) limit 25", lambda.Children.First().Value);
+         Foo.in
+            .:long:5
+            .:long:7");
+            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` where `Foo` in (@0,@1) limit 25", lambda.Children.First().Value);
             Assert.Equal(2, lambda.Children.First().Children.Count());
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal("@1", lambda.Children.First().Children.Skip(1).First().Name);
@@ -230,16 +230,15 @@ namespace magic.lambda.mysql.tests
       Howdy
    where
       and
-         in
-            Foo
-               :int:5
-               :int:7");
-            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` where (`Foo` in (@0,@1)) limit 25", lambda.Children.First().Value);
+         Foo.in
+            :int:5
+            :int:7");
+            Assert.Equal("select `Foo`,`Howdy` from `SomeTable` where `Foo` in (@0,@1) limit 25", lambda.Children.First().Value);
             Assert.Equal(2, lambda.Children.First().Children.Count());
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal("@1", lambda.Children.First().Children.Skip(1).First().Name);
-            Assert.Equal(5L, lambda.Children.First().Children.First().Value);
-            Assert.Equal(7L, lambda.Children.First().Children.Skip(1).First().Value);
+            Assert.Equal(5, lambda.Children.First().Children.First().Value);
+            Assert.Equal(7, lambda.Children.First().Children.Skip(1).First().Value);
         }
 
         [Fact]
@@ -261,9 +260,8 @@ namespace magic.lambda.mysql.tests
    where
       and
          jo-dude:int:5
-         like
-            foo-bar:howdy%");
-            Assert.Equal("delete from `SomeTable` where (`jo-dude` = @0 and `foo-bar` like @1)", lambda.Children.First().Value);
+         foo-bar.like:howdy%");
+            Assert.Equal("delete from `SomeTable` where `jo-dude` = @0 and `foo-bar` like @1", lambda.Children.First().Value);
             Assert.Equal(2, lambda.Children.First().Children.Count());
             Assert.Equal("@0", lambda.Children.First().Children.First().Name);
             Assert.Equal(5, lambda.Children.First().Children.First().Value);
@@ -350,7 +348,7 @@ namespace magic.lambda.mysql.tests
    values
       foo1:bar1
       foo2:int:5");
-            Assert.Equal("update `SomeTable` set `foo1` = @v0, `foo2` = @v1 where (`id` = @0)", lambda.Children.First().Value);
+            Assert.Equal("update `SomeTable` set `foo1` = @v0, `foo2` = @v1 where `id` = @0", lambda.Children.First().Value);
             Assert.Equal(3, lambda.Children.First().Children.Count());
             Assert.Equal("@v0", lambda.Children.First().Children.First().Name);
             Assert.Equal("bar1", lambda.Children.First().Children.First().Value);
@@ -372,7 +370,7 @@ namespace magic.lambda.mysql.tests
    values
       foo1:bar1
       foo2:int:5");
-            Assert.Equal("update `SomeTable` set `foo1` = @v0, `foo2` = @v1 where (`id` = @0)", lambda.Children.First().Value);
+            Assert.Equal("update `SomeTable` set `foo1` = @v0, `foo2` = @v1 where `id` = @0", lambda.Children.First().Value);
             Assert.Equal(3, lambda.Children.First().Children.Count());
             Assert.Equal("@v0", lambda.Children.First().Children.First().Name);
             Assert.Equal("bar1", lambda.Children.First().Children.First().Value);
@@ -394,7 +392,7 @@ namespace magic.lambda.mysql.tests
    values
       foo1:bar1
       foo2");
-            Assert.Equal("update `SomeTable` set `foo1` = @v0, `foo2` = null where (`id` = @0)", lambda.Children.First().Value);
+            Assert.Equal("update `SomeTable` set `foo1` = @v0, `foo2` = null where `id` = @0", lambda.Children.First().Value);
             Assert.Equal(2, lambda.Children.First().Children.Count());
             Assert.Equal("@v0", lambda.Children.First().Children.First().Name);
             Assert.Equal("bar1", lambda.Children.First().Children.First().Value);
