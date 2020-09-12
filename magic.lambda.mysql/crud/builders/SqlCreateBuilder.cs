@@ -29,7 +29,7 @@ namespace magic.lambda.mysql.crud.builders
         /// Overridden to generate the tail parts of your SQL.
         /// </summary>
         /// <param name="builder">Where to put your tail.</param>
-        protected override void GetTail(StringBuilder builder)
+        protected override void AppendTail(StringBuilder builder)
         {
             builder.Append("; select last_insert_id();");
         }
