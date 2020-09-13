@@ -10,7 +10,7 @@
     <Description>MySQL Server helper slots for Magic allowing you to easily connect to a MySQL database, and read, update, delete and insert into your database.</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.mysql</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>8.1.16</PackageVersion>
+    <PackageVersion>8.1.17</PackageVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.mysql.git</RepositoryUrl>
