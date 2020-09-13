@@ -22,6 +22,11 @@ namespace magic.lambda.mysql.helpers
             {
                 var connection = new MySqlConnection(connectionString);
                 connection.Open();
+
+                /*
+                 * This looks a bit dirty, but to make sure we always treat dates
+                 * as UTC, and that they're always stored as UTC, this is necessary.
+                 */
                 using (var cmd = new MySqlCommand("set time_zone = '+00:00'"))
                 {
                     cmd.Connection = connection;
