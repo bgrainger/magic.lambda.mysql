@@ -25,9 +25,4 @@
   <ItemGroup>
     <ProjectReference Include="..\magic.lambda.mysql\magic.lambda.mysql.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Configuration">
-    </Reference>
-  </ItemGroup>
 </Project>

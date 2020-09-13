@@ -24,9 +24,4 @@
     <ProjectReference Include="..\..\magic.signals\magic.signals.services\dev_magic.signals.services.csproj" />
     <ProjectReference Include="..\magic.lambda.mysql\dev_magic.lambda.mysql.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.Configuration">
-    </Reference>
-  </ItemGroup>
 </Project>
