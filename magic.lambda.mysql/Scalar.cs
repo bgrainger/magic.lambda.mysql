@@ -31,7 +31,7 @@ namespace magic.lambda.mysql
                 signaler.Peek<Transaction>("mysql.transaction"),
                 (cmd) =>
             {
-                input.Value = cmd.ExecuteScalar();
+                input.Value = Converter.GetValue(cmd.ExecuteScalar());
             });
         }
 
