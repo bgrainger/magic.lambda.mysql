@@ -1,7 +1,7 @@
 
 # Magic Lambda MySQL data adapters
 
-[![Build status](https://travis-ci.org/polterguy/magic.lambda.mysql.svg?master)](https://travis-ci.org/polterguy/magic.lambda.mysql)
+[![Build status](https://travis-ci.com/polterguy/magic.lambda.mysql.svg?master)](https://travis-ci.com/polterguy/magic.lambda.mysql)
 
 This is the MySQL data adapter for [Magic](https://github.com/polterguy/magic). This project allows you to provide a semantic
 lambda structure to its slots, which in turn will dynamically create a MySQL dialect SQL statement for you, for all basic
