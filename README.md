@@ -1,5 +1,5 @@
 
-# Magic Lambda MySQL data adapters
+# Magic Lambda MySQL
 
 [![Build status](https://travis-ci.com/polterguy/magic.lambda.mysql.svg?master)](https://travis-ci.com/polterguy/magic.lambda.mysql)
 
