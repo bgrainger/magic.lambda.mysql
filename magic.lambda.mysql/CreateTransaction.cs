@@ -15,7 +15,6 @@ namespace magic.lambda.mysql
     /// [mysql.transaction.create] slot for creating a new MySQL database transaction.
     /// </summary>
     [Slot(Name = "mysql.transaction.create")]
-    [Slot(Name = "wait.mysql.transaction.create")]
     public class CreateTransaction : ISlot, ISlotAsync
     {
         /// <summary>
@@ -42,7 +41,7 @@ namespace magic.lambda.mysql
             await signaler.ScopeAsync(
                 "mysql.transaction",
                 new Transaction(signaler, signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection),
-                async () => await signaler.SignalAsync("wait.eval", input));
+                async () => await signaler.SignalAsync("eval", input));
         }
     }
 }

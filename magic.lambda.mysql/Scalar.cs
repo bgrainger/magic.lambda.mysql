@@ -15,7 +15,6 @@ namespace magic.lambda.mysql
     /// [mysql.scalar] slot for executing a scalar type of SQL command.
     /// </summary>
     [Slot(Name = "mysql.scalar")]
-    [Slot(Name = "wait.mysql.scalar")]
     public class Scalar : ISlot, ISlotAsync
     {
         /// <summary>

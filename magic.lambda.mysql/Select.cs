@@ -16,7 +16,6 @@ namespace magic.lambda.mysql
     /// a row set.
     /// </summary>
     [Slot(Name = "mysql.select")]
-    [Slot(Name = "wait.mysql.select")]
     public class Select : ISlot, ISlotAsync
     {
         /// <summary>

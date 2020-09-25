@@ -17,7 +17,6 @@ namespace magic.lambda.mysql
     /// [mysql.connect] slot for connecting to a MySQL server instance.
     /// </summary>
     [Slot(Name = "mysql.connect")]
-    [Slot(Name = "wait.mysql.connect")]
     public class Connect : ISlot, ISlotAsync
     {
         readonly IConfiguration _configuration;
@@ -61,7 +60,7 @@ namespace magic.lambda.mysql
                 await signaler.ScopeAsync(
                     "mysql.connect",
                     connection,
-                    async () => await signaler.SignalAsync("wait.eval", input));
+                    async () => await signaler.SignalAsync("eval", input));
                 input.Value = null;
             }
         }

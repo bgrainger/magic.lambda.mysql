@@ -18,7 +18,6 @@ namespace magic.lambda.mysql.crud
     /// The [mysql.create] slot class
     /// </summary>
     [Slot(Name = "mysql.create")]
-    [Slot(Name = "wait.mysql.create")]
     public class Create : ISlot, ISlotAsync
     {
         /// <summary>
