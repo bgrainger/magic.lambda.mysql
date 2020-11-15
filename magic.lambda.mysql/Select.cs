@@ -29,12 +29,14 @@ namespace magic.lambda.mysql
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<Transaction>("mysql.transaction"),
-                (cmd) =>
+                (cmd, max) =>
             {
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
+                        if (max != -1 && max-- == 0)
+                            break; // Reached maximum limit
                         var rowNode = new Node();
                         for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
                         {
@@ -59,12 +61,14 @@ namespace magic.lambda.mysql
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<Transaction>("mysql.transaction"),
-                async (cmd) =>
+                async (cmd, max) =>
             {
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
+                        if (max != -1 && max-- == 0)
+                            break; // Reached maximum limit
                         var rowNode = new Node();
                         for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
                         {
