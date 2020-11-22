@@ -3,11 +3,10 @@
  * See the enclosed LICENSE file for details.
  */
 
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using magic.node;
-using magic.node.extensions;
+using magic.data.common;
 using magic.signals.contracts;
 using magic.lambda.mysql.helpers;
 
@@ -37,7 +36,12 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            using (var connection = new MySqlConnectionWrapper(GetConnectionString(input)))
+            using (var connection = new MySqlConnectionWrapper(
+                Executor.GetConnectionString(
+                    input,
+                    "mysql",
+                    "information_schema",
+                    _configuration)))
             {
                 signaler.Scope(
                     "mysql.connect",
@@ -55,7 +59,12 @@ namespace magic.lambda.mysql
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            using (var connection = new MySqlConnectionWrapper(GetConnectionString(input)))
+            using (var connection = new MySqlConnectionWrapper(
+                Executor.GetConnectionString(
+                    input,
+                    "mysql",
+                    "information_schema",
+                    _configuration)))
             {
                 await signaler.ScopeAsync(
                     "mysql.connect",
@@ -64,33 +73,5 @@ namespace magic.lambda.mysql
                 input.Value = null;
             }
         }
-
-        #region [ -- Private helper methods -- ]
-
-        string GetConnectionString(Node input)
-        {
-            var connectionString = input.Value == null ? null : input.GetEx<string>();
-
-            // Checking if this is a "generic connection string".
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                var generic = _configuration["magic:databases:mysql:generic"];
-                connectionString = generic.Replace("{database}", "information_schema");
-            }
-            else if (connectionString.StartsWith("[", StringComparison.InvariantCulture) &&
-                connectionString.EndsWith("]", StringComparison.InvariantCulture))
-            {
-                var generic = _configuration["magic:databases:mysql:generic"];
-                connectionString = generic.Replace("{database}", connectionString.Substring(1, connectionString.Length - 2));
-            }
-            else if (!connectionString.Contains(";"))
-            {
-                var generic = _configuration["magic:databases:mysql:generic"];
-                connectionString = generic.Replace("{database}", connectionString);
-            }
-            return connectionString;
-        }
-
-        #endregion
     }
 }
