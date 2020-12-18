@@ -3,9 +3,11 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System.Linq;
 using System.Threading.Tasks;
 using magic.node;
 using magic.data.common;
+using magic.node.extensions;
 using magic.signals.contracts;
 using magic.lambda.mysql.helpers;
 
@@ -25,6 +27,8 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
+            var multipleResultSets = input.Children
+                .FirstOrDefault(x => x.Name == "multiple-result-sets")?.GetEx<bool>() ?? false;
             Executor.Execute(
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
@@ -33,18 +37,31 @@ namespace magic.lambda.mysql
             {
                 using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    do
                     {
-                        if (max != -1 && max-- == 0)
-                            break; // Reached maximum limit
-                        var rowNode = new Node();
-                        for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
+                        var addNode = new Node();
+                        while (reader.Read())
                         {
-                            var colNode = new Node(reader.GetName(idxCol), Converter.GetValue(reader[idxCol]));
-                            rowNode.Add(colNode);
+                            if (max != -1 && max-- == 0)
+                                break; // Reached maximum limit
+                            var rowNode = new Node();
+                            for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
+                            {
+                                var colNode = new Node(reader.GetName(idxCol), magic.data.common.Converter.GetValue(reader[idxCol]));
+                                rowNode.Add(colNode);
+                            }
+                            addNode.Add(rowNode);
                         }
-                        input.Add(rowNode);
-                    }
+                        if (multipleResultSets)
+                        {
+                            input.Add(addNode);
+                            addNode = new Node();
+                        }
+                        else
+                        {
+                            input.AddRange(addNode.Children.ToList());
+                        }
+                    } while (multipleResultSets && reader.NextResult());
                 }
             });
         }
@@ -57,6 +74,8 @@ namespace magic.lambda.mysql
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
+            var multipleResultSets = input.Children
+                .FirstOrDefault(x => x.Name == "multiple-result-sets")?.GetEx<bool>() ?? false;
             await Executor.ExecuteAsync(
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
@@ -65,18 +84,31 @@ namespace magic.lambda.mysql
             {
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
-                    while (await reader.ReadAsync())
+                    do
                     {
-                        if (max != -1 && max-- == 0)
-                            break; // Reached maximum limit
-                        var rowNode = new Node();
-                        for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
+                        var addNode = new Node();
+                        while (await reader.ReadAsync())
                         {
-                            var colNode = new Node(reader.GetName(idxCol), Converter.GetValue(reader[idxCol]));
-                            rowNode.Add(colNode);
+                            if (max != -1 && max-- == 0)
+                                break; // Reached maximum limit
+                            var rowNode = new Node();
+                            for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
+                            {
+                                var colNode = new Node(reader.GetName(idxCol), magic.data.common.Converter.GetValue(reader[idxCol]));
+                                rowNode.Add(colNode);
+                            }
+                            addNode.Add(rowNode);
                         }
-                        input.Add(rowNode);
-                    }
+                        if (multipleResultSets)
+                        {
+                            input.Add(addNode);
+                            addNode = new Node();
+                        }
+                        else
+                        {
+                            input.AddRange(addNode.Children.ToList());
+                        }
+                    } while (multipleResultSets && await reader.NextResultAsync());
                 }
             });
         }
