@@ -39,7 +39,16 @@ namespace magic.lambda.mysql
                 {
                     do
                     {
-                        var addNode = new Node();
+                        Node parentNode;
+                        if (multipleResultSets)
+                        {
+                            parentNode = new Node();
+                            input.Add(parentNode);
+                        }
+                        else
+                        {
+                            parentNode = input;
+                        }
                         while (reader.Read())
                         {
                             if (max != -1 && max-- == 0)
@@ -50,16 +59,7 @@ namespace magic.lambda.mysql
                                 var colNode = new Node(reader.GetName(idxCol), magic.data.common.Converter.GetValue(reader[idxCol]));
                                 rowNode.Add(colNode);
                             }
-                            addNode.Add(rowNode);
-                        }
-                        if (multipleResultSets)
-                        {
-                            input.Add(addNode);
-                            addNode = new Node();
-                        }
-                        else
-                        {
-                            input.AddRange(addNode.Children.ToList());
+                            parentNode.Add(rowNode);
                         }
                     } while (multipleResultSets && reader.NextResult());
                 }
@@ -86,7 +86,16 @@ namespace magic.lambda.mysql
                 {
                     do
                     {
-                        var addNode = new Node();
+                        Node parentNode;
+                        if (multipleResultSets)
+                        {
+                            parentNode = new Node();
+                            input.Add(parentNode);
+                        }
+                        else
+                        {
+                            parentNode = input;
+                        }
                         while (await reader.ReadAsync())
                         {
                             if (max != -1 && max-- == 0)
@@ -97,16 +106,7 @@ namespace magic.lambda.mysql
                                 var colNode = new Node(reader.GetName(idxCol), magic.data.common.Converter.GetValue(reader[idxCol]));
                                 rowNode.Add(colNode);
                             }
-                            addNode.Add(rowNode);
-                        }
-                        if (multipleResultSets)
-                        {
-                            input.Add(addNode);
-                            addNode = new Node();
-                        }
-                        else
-                        {
-                            input.AddRange(addNode.Children.ToList());
+                            parentNode.Add(rowNode);
                         }
                     } while (multipleResultSets && await reader.NextResultAsync());
                 }
