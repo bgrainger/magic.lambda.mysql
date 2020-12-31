@@ -27,8 +27,9 @@ namespace magic.lambda.mysql
         /// <param name="input">Root node for invocation.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            var multipleResultSets = input.Children
-                .FirstOrDefault(x => x.Name == "multiple-result-sets")?.GetEx<bool>() ?? false;
+            var mrsNode = input.Children.FirstOrDefault(x => x.Name == "multiple-result-sets");
+            var multipleResultSets = mrsNode?.GetEx<bool>() ?? false;
+            mrsNode?.UnTie();
             Executor.Execute(
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
@@ -74,8 +75,9 @@ namespace magic.lambda.mysql
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            var multipleResultSets = input.Children
-                .FirstOrDefault(x => x.Name == "multiple-result-sets")?.GetEx<bool>() ?? false;
+            var mrsNode = input.Children.FirstOrDefault(x => x.Name == "multiple-result-sets");
+            var multipleResultSets = mrsNode?.GetEx<bool>() ?? false;
+            mrsNode?.UnTie();
             await Executor.ExecuteAsync(
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
