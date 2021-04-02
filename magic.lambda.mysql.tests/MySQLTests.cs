@@ -104,7 +104,7 @@ namespace magic.lambda.mysql.tests
    generate:bool:true
    table:SomeTable
    order:foo");
-            Assert.Equal("select * from `SomeTable` order by `foo` limit 25", lambda.Children.First().Value);
+            Assert.Equal("select * from `SomeTable` order by `foo` asc limit 25", lambda.Children.First().Value);
             Assert.Empty(lambda.Children.First().Children);
         }
 
