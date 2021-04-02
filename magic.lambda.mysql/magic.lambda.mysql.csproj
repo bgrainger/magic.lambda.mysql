@@ -6,7 +6,7 @@
     <PackageId>magic.lambda.mysql</PackageId>
     <Authors>Thomas Hansen</Authors>
     <Company>Thomas Hansen</Company>
-    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
+    <Copyright>Thomas Hansen, thomas@servergardens.com</Copyright>
     <Description>MySQL Server helper slots for Magic allowing you to easily connect to a MySQL database, and read, update, delete and insert into your database. To use package go to https://polterguy.github.io</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.mysql</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../ico.png" Pack="true" PackagePath="$(PackageIcon)"/>
+    <None Include="../ico.png" Pack="true" PackagePath="$(PackageIcon)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,9 +38,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.21" />
+    <PackageReference Include="MySql.Data" Version="8.0.23" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
-    <PackageReference Include="magic.data.common" Version="8.9.*" />
+    <PackageReference Include="magic.data.common" Version="8.9.9" />
   </ItemGroup>
 
 </Project>
