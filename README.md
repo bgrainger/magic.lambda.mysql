@@ -32,6 +32,10 @@ slots, instead of the generic, and/or polymorphistic slots.
 Hence, please refer to the documentation for _"magic.data.common"_ to read the documentation for this
 project.
 
+## Project website
+
+The source code for this repository can be found at [github.com/polterguy/magic.lambda.mysql](https://github.com/polterguy/magic.lambda.mysql), and you can provide feedback, provide bug reports, etc at the same place.
+
 ## Quality gates
 
 - [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.mysql&metric=alert_status)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.mysql)
