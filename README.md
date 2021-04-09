@@ -22,7 +22,7 @@ this project contains are as follows.
 **Notice** - If you use any of the CRUD slots from above, the whole idea is that you can polymorphistically
 use the same lambda object, towards any of the underlaying database types, and the correct specific syntax
 for your particular database vendor's SQL syntax will be automatically generated. This allows you to
-transparently use the same lambda object, towards any of the supported database types, without having to
+transparently use the same lambda object, towards any of the database types Magic supports, without having to
 change it in any ways.
 
 All of the slots in this project are documented in the documentation for the _"magic.data.common"_ project.
