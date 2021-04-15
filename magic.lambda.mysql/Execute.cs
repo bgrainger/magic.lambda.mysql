@@ -28,7 +28,7 @@ namespace magic.lambda.mysql
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<Transaction>("mysql.transaction"),
-                (cmd) =>
+                (cmd, _) =>
             {
                 input.Value = cmd.ExecuteNonQuery();
             });
@@ -46,7 +46,7 @@ namespace magic.lambda.mysql
                 input,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<Transaction>("mysql.transaction"),
-                async (cmd) =>
+                async (cmd, _) =>
             {
                 input.Value = await cmd.ExecuteNonQueryAsync();
             });

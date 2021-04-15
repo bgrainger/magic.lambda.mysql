@@ -35,7 +35,7 @@ namespace magic.lambda.mysql.crud
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
-                (cmd) =>
+                (cmd, _) =>
             {
                 input.Value = cmd.ExecuteNonQuery();
                 input.Clear();
@@ -60,7 +60,7 @@ namespace magic.lambda.mysql.crud
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
-                async (cmd) =>
+                async (cmd, _) =>
             {
                 input.Value = await cmd.ExecuteNonQueryAsync();
                 input.Clear();

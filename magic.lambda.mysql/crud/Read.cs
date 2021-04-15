@@ -35,7 +35,7 @@ namespace magic.lambda.mysql.crud
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
-                (cmd) =>
+                (cmd, _) =>
             {
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -72,7 +72,7 @@ namespace magic.lambda.mysql.crud
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
-                async (cmd) =>
+                async (cmd, _) =>
             {
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {

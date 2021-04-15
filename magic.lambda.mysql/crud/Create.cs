@@ -52,7 +52,7 @@ namespace magic.lambda.mysql.crud
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
-                (cmd) =>
+                (cmd, _) =>
             {
                 /*
                  * Checking if caller wants us to return the ID of the newly
@@ -104,7 +104,7 @@ namespace magic.lambda.mysql.crud
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
                 signaler.Peek<com.Transaction>("mysql.transaction"),
-                async (cmd) =>
+                async (cmd, _) =>
             {
                 /*
                  * Checking if caller wants us to return the ID of the newly
