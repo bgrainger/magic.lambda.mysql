@@ -8,8 +8,9 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 using magic.lambda.mysql.helpers;
-using help = magic.data.common.helpers;
 using magic.lambda.mysql.crud.builders;
+using help = magic.data.common.helpers;
+using build = magic.data.common.builders;
 
 namespace magic.lambda.mysql.crud
 {
@@ -35,8 +36,8 @@ namespace magic.lambda.mysql.crud
 
             // Parsing and creating SQL.
             var exe = returnId ?
-                help.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
-                help.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+                build.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                build.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
 
             /*
              * Notice, if the builder doesn't return a node, we are
@@ -87,8 +88,8 @@ namespace magic.lambda.mysql.crud
 
             // Parsing and creating SQL.
             var exe = returnId ?
-                help.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
-                help.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+                build.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                build.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
 
             /*
              * Notice, if the builder doesn't return a node, we are
