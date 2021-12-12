@@ -8,7 +8,7 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 using magic.lambda.mysql.helpers;
-using com = magic.data.common.helpers;
+using help = magic.data.common.helpers;
 using magic.lambda.mysql.crud.builders;
 
 namespace magic.lambda.mysql.crud
@@ -35,8 +35,8 @@ namespace magic.lambda.mysql.crud
 
             // Parsing and creating SQL.
             var exe = returnId ?
-                com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
-                com.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+                help.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                help.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
 
             /*
              * Notice, if the builder doesn't return a node, we are
@@ -47,10 +47,10 @@ namespace magic.lambda.mysql.crud
                 return;
 
             // Executing SQL, now parametrized.
-            com.Executor.Execute(
+            help.Executor.Execute(
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
-                signaler.Peek<com.Transaction>("mysql.transaction"),
+                signaler.Peek<help.Transaction>("mysql.transaction"),
                 (cmd, _) =>
             {
                 /*
@@ -87,8 +87,8 @@ namespace magic.lambda.mysql.crud
 
             // Parsing and creating SQL.
             var exe = returnId ?
-                com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
-                com.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+                help.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                help.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
 
             /*
              * Notice, if the builder doesn't return a node, we are
@@ -99,10 +99,10 @@ namespace magic.lambda.mysql.crud
                 return;
 
             // Executing SQL, now parametrized.
-            await com.Executor.ExecuteAsync(
+            await help.Executor.ExecuteAsync(
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
-                signaler.Peek<com.Transaction>("mysql.transaction"),
+                signaler.Peek<help.Transaction>("mysql.transaction"),
                 async (cmd, _) =>
             {
                 /*

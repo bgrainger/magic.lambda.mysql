@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using magic.node;
 using magic.signals.contracts;
 using magic.lambda.mysql.helpers;
-using com = magic.data.common.helpers;
+using help = magic.data.common.helpers;
 using magic.lambda.mysql.crud.builders;
 
 namespace magic.lambda.mysql.crud
@@ -25,15 +25,15 @@ namespace magic.lambda.mysql.crud
         public void Signal(ISignaler signaler, Node input)
         {
             // Parsing and creating SQL.
-            var exe = com.SqlBuilder.Parse<SqlReadBuilder>(signaler, input);
+            var exe = help.SqlBuilder.Parse<SqlReadBuilder>(signaler, input);
             if (exe == null)
                 return;
 
             // Executing SQL, now parametrized.
-            com.Executor.Execute(
+            help.Executor.Execute(
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
-                signaler.Peek<com.Transaction>("mysql.transaction"),
+                signaler.Peek<help.Transaction>("mysql.transaction"),
                 (cmd, _) =>
             {
                 using (var reader = cmd.ExecuteReader())
@@ -44,7 +44,7 @@ namespace magic.lambda.mysql.crud
                         var rowNode = new Node(".");
                         for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
                         {
-                            var colNode = new Node(reader.GetName(idxCol), com.Converter.GetValue(reader[idxCol]));
+                            var colNode = new Node(reader.GetName(idxCol), help.Converter.GetValue(reader[idxCol]));
                             rowNode.Add(colNode);
                         }
                         input.Add(rowNode);
@@ -62,15 +62,15 @@ namespace magic.lambda.mysql.crud
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             // Parsing and creating SQL.
-            var exe = com.SqlBuilder.Parse<SqlReadBuilder>(signaler, input);
+            var exe = help.SqlBuilder.Parse<SqlReadBuilder>(signaler, input);
             if (exe == null)
                 return;
 
             // Executing SQL, now parametrized.
-            await com.Executor.ExecuteAsync(
+            await help.Executor.ExecuteAsync(
                 exe,
                 signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection,
-                signaler.Peek<com.Transaction>("mysql.transaction"),
+                signaler.Peek<help.Transaction>("mysql.transaction"),
                 async (cmd, _) =>
             {
                 using (var reader = await cmd.ExecuteReaderAsync())
@@ -81,7 +81,7 @@ namespace magic.lambda.mysql.crud
                         var rowNode = new Node(".");
                         for (var idxCol = 0; idxCol < reader.FieldCount; idxCol++)
                         {
-                            var colNode = new Node(reader.GetName(idxCol), com.Converter.GetValue(reader[idxCol]));
+                            var colNode = new Node(reader.GetName(idxCol), help.Converter.GetValue(reader[idxCol]));
                             rowNode.Add(colNode);
                         }
                         input.Add(rowNode);

@@ -4,7 +4,7 @@
 
 using magic.node;
 using magic.signals.contracts;
-using com = magic.data.common.builders;
+using builder = magic.data.common.builders;
 
 namespace magic.lambda.mysql.crud.builders
 {
@@ -12,7 +12,7 @@ namespace magic.lambda.mysql.crud.builders
     /// Specialised select SQL builder, to create a select MySQL SQL statement
     /// by semantically traversing an input node.
     /// </summary>
-    public class SqlReadBuilder : com.SqlReadBuilder
+    public class SqlReadBuilder : builder.SqlReadBuilder
     {
         /// <summary>
         /// Creates a select SQL statement

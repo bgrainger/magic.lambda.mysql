@@ -4,7 +4,7 @@
 
 using magic.node;
 using magic.signals.contracts;
-using com = magic.data.common.builders;
+using builder = magic.data.common.builders;
 
 namespace magic.lambda.mysql.crud.builders
 {
@@ -13,7 +13,7 @@ namespace magic.lambda.mysql.crud.builders
     /// by semantically traversing an input node, that does not return the ID
     /// of the newly created record.
     /// </summary>
-    public class SqlCreateBuilderNoId : com.SqlCreateBuilder
+    public class SqlCreateBuilderNoId : builder.SqlCreateBuilder
     {
         /// <summary>
         /// Creates an insert SQL statement

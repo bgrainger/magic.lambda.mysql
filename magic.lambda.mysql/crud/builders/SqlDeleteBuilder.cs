@@ -4,7 +4,7 @@
 
 using magic.node;
 using magic.signals.contracts;
-using com = magic.data.common.builders;
+using builder = magic.data.common.builders;
 
 namespace magic.lambda.mysql.crud.builders
 {
@@ -12,7 +12,7 @@ namespace magic.lambda.mysql.crud.builders
     /// Specialised delete SQL builder, to create a delete MySQL SQL statement
     /// by semantically traversing an input node.
     /// </summary>
-    public class SqlDeleteBuilder : com.SqlDeleteBuilder
+    public class SqlDeleteBuilder : builder.SqlDeleteBuilder
     {
         /// <summary>
         /// Creates a delete SQL statement

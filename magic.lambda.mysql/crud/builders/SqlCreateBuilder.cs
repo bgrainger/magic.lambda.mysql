@@ -5,7 +5,7 @@
 using System.Text;
 using magic.node;
 using magic.signals.contracts;
-using com = magic.data.common.builders;
+using builder = magic.data.common.builders;
 
 namespace magic.lambda.mysql.crud.builders
 {
@@ -13,7 +13,7 @@ namespace magic.lambda.mysql.crud.builders
     /// Specialised insert SQL builder, to create an insert MySQL SQL statement
     /// by semantically traversing an input node.
     /// </summary>
-    public class SqlCreateBuilder : com.SqlCreateBuilder
+    public class SqlCreateBuilder : builder.SqlCreateBuilder
     {
         /// <summary>
         /// Creates an insert SQL statement
