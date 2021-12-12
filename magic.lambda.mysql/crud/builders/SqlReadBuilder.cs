@@ -18,8 +18,7 @@ namespace magic.lambda.mysql.crud.builders
         /// Creates a select SQL statement
         /// </summary>
         /// <param name="node">Root node to generate your SQL from.</param>
-        /// <param name="signaler">Signaler to invoke slots.</param>
-        public SqlReadBuilder(Node node, ISignaler signaler)
+        public SqlReadBuilder(Node node)
             : base(node, "`")
         { }
     }

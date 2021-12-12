@@ -18,8 +18,7 @@ namespace magic.lambda.mysql.crud.builders
         /// Creates an update SQL statement
         /// </summary>
         /// <param name="node">Root node to generate your SQL from.</param>
-        /// <param name="signaler">Signaler to invoke slots.</param>
-        public SqlUpdateBuilder(Node node, ISignaler signaler)
+        public SqlUpdateBuilder(Node node)
             : base(node, "`")
         { }
     }

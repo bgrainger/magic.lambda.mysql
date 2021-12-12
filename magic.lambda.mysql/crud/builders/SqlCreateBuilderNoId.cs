@@ -19,8 +19,7 @@ namespace magic.lambda.mysql.crud.builders
         /// Creates an insert SQL statement
         /// </summary>
         /// <param name="node">Root node to generate your SQL from.</param>
-        /// <param name="signaler">Signaler to invoke slots.</param>
-        public SqlCreateBuilderNoId(Node node, ISignaler signaler)
+        public SqlCreateBuilderNoId(Node node)
             : base(node, "`")
         { }
     }

@@ -18,8 +18,7 @@ namespace magic.lambda.mysql.crud.builders
         /// Creates a delete SQL statement
         /// </summary>
         /// <param name="node">Root node to generate your SQL from.</param>
-        /// <param name="signaler">Signaler to invoke slots.</param>
-        public SqlDeleteBuilder(Node node, ISignaler signaler)
+        public SqlDeleteBuilder(Node node)
             : base(node, "`")
         { }
     }
