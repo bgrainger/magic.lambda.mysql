@@ -3,10 +3,10 @@
  */
 
 using magic.node;
-using magic.data.common;
 using magic.signals.contracts;
 using System.Threading.Tasks;
 using magic.lambda.mysql.helpers;
+using hlp = magic.data.common.helpers;
 
 namespace magic.lambda.mysql
 {
@@ -25,7 +25,7 @@ namespace magic.lambda.mysql
         {
             signaler.Scope(
                 "mysql.transaction",
-                new Transaction(signaler, signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection),
+                new hlp.Transaction(signaler, signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection),
                 () => signaler.Signal("eval", input));
         }
 
@@ -39,7 +39,7 @@ namespace magic.lambda.mysql
         {
             await signaler.ScopeAsync(
                 "mysql.transaction",
-                new Transaction(signaler, signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection),
+                new hlp.Transaction(signaler, signaler.Peek<MySqlConnectionWrapper>("mysql.connect").Connection),
                 async () => await signaler.SignalAsync("eval", input));
         }
     }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
-using com = magic.data.common;
 using magic.lambda.mysql.helpers;
+using com = magic.data.common.helpers;
 using magic.lambda.mysql.crud.builders;
 
 namespace magic.lambda.mysql.crud
@@ -35,8 +35,8 @@ namespace magic.lambda.mysql.crud
 
             // Parsing and creating SQL.
             var exe = returnId ?
-                com.helpers.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
-                com.helpers.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+                com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                com.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
 
             /*
              * Notice, if the builder doesn't return a node, we are
@@ -87,8 +87,8 @@ namespace magic.lambda.mysql.crud
 
             // Parsing and creating SQL.
             var exe = returnId ?
-                com.helpers.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
-                com.helpers.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
+                com.SqlBuilder.Parse<SqlCreateBuilder>(signaler, input) :
+                com.SqlBuilder.Parse<SqlCreateBuilderNoId>(signaler, input);
 
             /*
              * Notice, if the builder doesn't return a node, we are

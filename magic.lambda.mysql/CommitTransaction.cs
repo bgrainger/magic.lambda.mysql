@@ -3,8 +3,8 @@
  */
 
 using magic.node;
-using magic.data.common;
 using magic.signals.contracts;
+using magic.data.common.helpers;
 
 namespace magic.lambda.mysql
 {
