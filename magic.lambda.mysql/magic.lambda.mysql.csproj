@@ -48,7 +48,7 @@
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.27" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
-    <PackageReference Include="magic.data.common" Version="9.9.9" />
+    <PackageReference Include="magic.data.common" Version="10.0.1" />
   </ItemGroup>
 
 </Project>
