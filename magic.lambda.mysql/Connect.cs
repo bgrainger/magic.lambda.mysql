@@ -3,8 +3,8 @@
  */
 
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using magic.node;
+using magic.node.contracts;
 using magic.signals.contracts;
 using magic.data.common.helpers;
 using magic.lambda.mysql.helpers;
@@ -17,13 +17,13 @@ namespace magic.lambda.mysql
     [Slot(Name = "mysql.connect")]
     public class Connect : ISlot, ISlotAsync
     {
-        readonly IConfiguration _configuration;
+        readonly IMagicConfiguration _configuration;
 
         /// <summary>
         /// Creates a new instance of your class.
         /// </summary>
         /// <param name="configuration">Configuration for your application.</param>
-        public Connect(IConfiguration configuration)
+        public Connect(IMagicConfiguration configuration)
         {
             _configuration = configuration;
         }
