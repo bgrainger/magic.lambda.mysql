@@ -4,7 +4,6 @@
 
 using System.Text;
 using magic.node;
-using magic.signals.contracts;
 using builder = magic.data.common.builders;
 
 namespace magic.lambda.mysql.crud.builders
