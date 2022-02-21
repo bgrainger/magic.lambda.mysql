@@ -31,8 +31,6 @@ namespace magic.lambda.mysql.tests
         static IServiceProvider Initialize()
         {
             var services = new ServiceCollection();
-            var mockConfiguration = new Mock<IMagicConfiguration>();
-            services.AddTransient((svc) => mockConfiguration.Object);
             services.AddTransient<ISignaler, Signaler>();
             var types = new SignalsProvider(InstantiateAllTypes<ISlot>(services));
             services.AddTransient<ISignalsProvider>((svc) => types);
