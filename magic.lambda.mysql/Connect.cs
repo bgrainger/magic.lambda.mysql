@@ -4,10 +4,10 @@
 
 using System.Threading.Tasks;
 using magic.node;
-using magic.node.contracts;
 using magic.signals.contracts;
 using magic.data.common.helpers;
 using magic.lambda.mysql.helpers;
+using magic.data.common.contracts;
 
 namespace magic.lambda.mysql
 {
@@ -17,15 +17,15 @@ namespace magic.lambda.mysql
     [Slot(Name = "mysql.connect")]
     public class Connect : ISlot, ISlotAsync
     {
-        readonly IMagicConfiguration _configuration;
+        readonly IDataSettings _settings;
 
         /// <summary>
         /// Creates a new instance of your class.
         /// </summary>
-        /// <param name="configuration">Configuration for your application.</param>
-        public Connect(IMagicConfiguration configuration)
+        /// <param name="settings">Configuration object.</param>
+        public Connect(IDataSettings settings)
         {
-            _configuration = configuration;
+            _settings = settings;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace magic.lambda.mysql
                     input,
                     "mysql",
                     "information_schema",
-                    _configuration)))
+                    _settings)))
             {
                 signaler.Scope(
                     "mysql.connect",
@@ -63,7 +63,7 @@ namespace magic.lambda.mysql
                     input,
                     "mysql",
                     "information_schema",
-                    _configuration)))
+                    _settings)))
             {
                 await signaler.ScopeAsync(
                     "mysql.connect",
