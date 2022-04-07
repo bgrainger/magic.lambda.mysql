@@ -4,6 +4,7 @@
 
 using System;
 using MySql.Data.MySqlClient;
+using magic.node.extensions;
 
 namespace magic.lambda.mysql.helpers
 {
@@ -22,14 +23,14 @@ namespace magic.lambda.mysql.helpers
                 var connection = new MySqlConnection(connectionString);
                 connection.Open();
 
-                /*
-                 * This looks a bit dirty, but to make sure we always treat dates
-                 * as UTC, and that they're always stored as UTC, this is necessary.
-                 */
-                using (var cmd = new MySqlCommand("set time_zone = '+00:00'"))
+                // Checking if the server should assume that everything is UTC.
+                if (Converter.AssumeUtc)
                 {
-                    cmd.Connection = connection;
-                    cmd.ExecuteNonQuery();
+                    using (var cmd = new MySqlCommand("set time_zone = '+00:00'"))
+                    {
+                        cmd.Connection = connection;
+                        cmd.ExecuteNonQuery();
+                    }
                 }
                 return connection;
             });
